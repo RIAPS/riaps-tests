@@ -2,11 +2,11 @@ from riaps.run.comp import Component
 import logging
 import os
 
-class B(Component):
+class B(Component, logfile):
     def __init__(self):
         super(B, self).__init__()
 
-        self.logpath = '/tmp/B.log'
+        self.logpath = '/tmp/' + logfile
         self.logFile = open(self.logpath, 'w')
         self.logFile.write('Actor B started\n')
 

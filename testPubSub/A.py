@@ -4,11 +4,11 @@ import logging
 import os
 import sys
 
-class A(Component):
+class A(Component, logfile):
     def __init__(self):
         super(A, self).__init__()
 
-        self.logpath = '/tmp/A.log'
+        self.logpath = '/tmp/' + logfile
         self.logFile = open(self.logpath, 'w')
         self.logFile.write('Actor A started\n')
 

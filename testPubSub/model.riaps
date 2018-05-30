@@ -5,26 +5,26 @@ app testPubSub {
     message topicA;
     message topicB;
 
-    component A {
+    component A(logfile = "A") {
       pub pubPort : topicA;
       sub subPort : topicB;
       timer clock 10000;
     }
 
-    component B {
+    component B(logfile = "B") {
       sub subPort : topicA;
       pub pubPort : topicB;
     }
 
-    actor actorA {
+    actor actorA(logfile = "A.log") {
        {
-          compA : A;
+          compA : A(logfile = logfile);
        }
     }
 
-    actor actorB {
+    actor actorB(logfile = "B.log") {
        {
-          compB : B;
+          compB : B(logfile = logfile);
        }
     }
 }
