@@ -2,25 +2,25 @@
 
 app TimerS {
 	message Tick;
-	
+
 	// Period timer component
-    component PeriodicTimer {
-      timer periodic 5000; 							
+    component PeriodicTimer(logfile = "") {
+      timer periodic 5000;
       pub ticker : Tick;
     }
-    
+
     // Sporadic timer component
-    component SporadicTimer {
+    component SporadicTimer(logfile = "") {
       sub ticker : Tick;
       timer sporadic;
     }
 
     // TimerActor
-    actor TimerActor {
+    actor TimerActor(logfile = "TimerActor") {
 		local Tick;
       	{
-          periodic: PeriodicTimer; 		
-          sporadic: SporadicTimer;		
+          periodic: PeriodicTimer(logfile = logfile);
+          sporadic: SporadicTimer(logfile = logfile);
        	}
     }
 }
