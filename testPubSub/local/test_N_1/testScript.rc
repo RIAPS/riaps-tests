@@ -1,0 +1,8 @@
+w 10
+f /home/riaps/riaps-tests/testPubSub/local/test_N_1
+m model.riaps
+d model.depl
+l test_N_1
+w 20
+h test_N_1
+q

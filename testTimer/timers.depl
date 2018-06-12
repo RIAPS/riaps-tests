@@ -1,3 +1,0 @@
-app testTimer {
-    on all TimerActor;
-}

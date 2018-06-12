@@ -1,8 +1,0 @@
-w 10
-f /home/riaps/riaps-tests/testCltSrv
-m cltsrv.riaps
-d cltsrv.depl
-l testCltSrv
-w 20
-h testCltSrv
-q
