@@ -1,0 +1,8 @@
+w 10
+f /home/riaps/riaps-test/testTimer
+m timers.riaps
+d timers.depl
+l testTimer
+w 20
+h testTimer
+q
