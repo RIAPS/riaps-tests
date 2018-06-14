@@ -1,26 +1,37 @@
-//For initial capability Test 7.1.1.2.1
+//For initial capability Test 7.1.1.2.4
 app TestPubSub{
 	message Topic1;
-	
+
 	component CompPub(logfile = "") {
 		pub PubPort : Topic1;
 		timer clock 1000;
 	}
-	
+
 	component CompSub(logfile = "") {
 		sub SubPort : Topic1;
-		timer startup 2000;
 	}
-	
+
 	actor ActorA(logfile = "ActorA") {
 		{
-			CompA : CompPub(logfile = logfile);	
+			CompA : CompSub(logfile = logfile);
 		}
 	}
-	
+
 	actor ActorB(logfile = "ActorB") {
 		{
-			CompB : CompSub(logfile = logfile);
-		} 
+			CompB : CompPub(logfile = logfile);
+		}
+	}
+
+	actor ActorC(logfile = "ActorC") {
+		{
+			CompB : CompPub(logfile = logfile);
+		}
+	}
+
+	actor ActorD(logfile = "ActorD") {
+		{
+			CompB : CompPub(logfile = logfile);
+		}
 	}
 }
