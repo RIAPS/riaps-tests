@@ -1,7 +1,7 @@
 w 10
 f /home/riaps/riaps-tests/testPubSub/local/test_1_1
-m model.riaps
-d model.depl
+m TestPubSub.riaps
+d TestPubSub.depl
 l test_1_1
 w 20
 h test_1_1
