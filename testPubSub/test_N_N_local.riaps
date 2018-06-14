@@ -1,4 +1,4 @@
-//For initial capability Test 7.1.1.2.3
+//For initial capability Test 7.1.1.2.5
 app TestPubSub{
 	message Topic1;
 
@@ -12,26 +12,30 @@ app TestPubSub{
 	}
 
 	actor ActorA(logfile = "ActorA") {
+		local Topic1;
 		{
 			CompA : CompPub(logfile = logfile);
 		}
 	}
 
 	actor ActorB(logfile = "ActorB") {
+		local Topic1;
 		{
-			CompB : CompSub(logfile = logfile);
+			CompB : CompPub(logfile = logfile);
 		}
 	}
 
 	actor ActorC(logfile = "ActorC") {
+		local Topic1;
 		{
-			CompB : CompSub(logfile = logfile);
+			CompC : CompSub(logfile = logfile);
 		}
 	}
 
 	actor ActorD(logfile = "ActorD") {
+		local Topic1;
 		{
-			CompB : CompSub(logfile = logfile);
+			CompD : CompSub(logfile = logfile);
 		}
 	}
 }

@@ -1,8 +1,0 @@
-w 10
-f /home/riaps/riaps-tests/testPubSub/local/test_N_N
-m model.riaps
-d model.depl
-l test_N_N
-w 20
-h test_N_N
-q

@@ -22,14 +22,14 @@ class CompPub(Component):
 
         self.logger.info("(PID %s) - starting CompPub",str(self.pid))
 
+        self.actorName = logfile
         self.messageCounter = 0
 
     def on_clock(self):
-       now = self.startup.recv_pyobj()
-       self.logger.info('PID(%s) - on_startup(): %s',str(self.pid),str(now))
+       now = self.clock.recv_pyobj()
        msg = self.messageCounter
        self.PubPort.send_pyobj(msg)
-       self.logger.info("Publish %s" % self.messageCounter)
+       self.logger.info("Publish %s %s" % (self.actorName,self.messageCounter))
        self.messageCounter += 1
 
 

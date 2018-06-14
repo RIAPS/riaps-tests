@@ -22,18 +22,11 @@ class CompSub(Component):
 
         self.logger.info("(PID %s) - starting CompSub",str(self.pid))
 
-        self.started = 0
+        self.actorName = logfile
 
     def on_SubPort(self):
         msg = self.SubPort.recv_pyobj()
-        if self.started != 0:
-            self.logger.info("Subscribe %s",str(self.pid), str(msg))
-
-    def on_startup(self):
-       now = self.startup.recv_pyobj()
-       self.logger.info('PID(%s) - on_startup(): %s',str(self.pid),str(now))
-       self.started = 1
-       self.startup.halt()
+        self.logger.info("Subscribe %s %s" % (self.actorName,str(msg)))
 
     def __destroy__(self):
         self.logger.info("(PID %s) - stopping CompSub",str(self.pid))

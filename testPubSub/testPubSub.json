@@ -1,11 +1,21 @@
 {
     "actors":{
-        "actorA":{
-            "formals":[],
+        "ActorA":{
+            "formals":[
+                {
+                    "default":"ActorA",
+                    "name":"logfile"
+                }
+            ],
             "instances":{
-                "compA":{
-                    "actuals":[],
-                    "type":"A"
+                "CompA":{
+                    "actuals":[
+                        {
+                            "name":"logfile",
+                            "param":"logfile"
+                        }
+                    ],
+                    "type":"CompPub"
                 }
             },
             "internals":[],
@@ -17,12 +27,22 @@
                 "spc":{}
             }
         },
-        "actorB":{
-            "formals":[],
+        "ActorB":{
+            "formals":[
+                {
+                    "default":"ActorB",
+                    "name":"logfile"
+                }
+            ],
             "instances":{
-                "compB":{
-                    "actuals":[],
-                    "type":"B"
+                "CompB":{
+                    "actuals":[
+                        {
+                            "name":"logfile",
+                            "param":"logfile"
+                        }
+                    ],
+                    "type":"CompSub"
                 }
             },
             "internals":[],
@@ -36,60 +56,59 @@
         }
     },
     "components":{
-        "A":{
-            "formals":[],
-            "name":"A",
+        "CompPub":{
+            "formals":[
+                {
+                    "default":"",
+                    "name":"logfile"
+                }
+            ],
+            "name":"CompPub",
             "ports":{
                 "anss":{},
                 "clts":{},
                 "inss":{},
                 "pubs":{
-                    "pubPort":{
+                    "PubPort":{
                         "timed":false,
-                        "type":"topicA"
+                        "type":"Topic1"
                     }
                 },
                 "qrys":{},
                 "reps":{},
                 "reqs":{},
                 "srvs":{},
-                "subs":{
-                    "subPort":{
-                        "deadline":0,
-                        "timed":false,
-                        "type":"topicB"
-                    }
-                },
+                "subs":{},
                 "tims":{
                     "clock":{
                         "deadline":0,
-                        "period":10000
+                        "period":1000
                     }
                 }
             }
         },
-        "B":{
-            "formals":[],
-            "name":"B",
+        "CompSub":{
+            "formals":[
+                {
+                    "default":"",
+                    "name":"logfile"
+                }
+            ],
+            "name":"CompSub",
             "ports":{
                 "anss":{},
                 "clts":{},
                 "inss":{},
-                "pubs":{
-                    "pubPort":{
-                        "timed":false,
-                        "type":"topicB"
-                    }
-                },
+                "pubs":{},
                 "qrys":{},
                 "reps":{},
                 "reqs":{},
                 "srvs":{},
                 "subs":{
-                    "subPort":{
+                    "SubPort":{
                         "deadline":0,
                         "timed":false,
-                        "type":"topicA"
+                        "type":"Topic1"
                     }
                 },
                 "tims":{}
@@ -100,10 +119,7 @@
     "libraries":[],
     "messages":[
         {
-            "name":"topicA"
-        },
-        {
-            "name":"topicB"
+            "name":"Topic1"
         }
     ],
     "name":"testPubSub"

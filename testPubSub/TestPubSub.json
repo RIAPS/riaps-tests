@@ -111,12 +111,7 @@
                         "type":"Topic1"
                     }
                 },
-                "tims":{
-                    "startup":{
-                        "deadline":0,
-                        "period":2000
-                    }
-                }
+                "tims":{}
             }
         }
     },
