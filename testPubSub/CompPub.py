@@ -26,6 +26,7 @@ class CompPub(Component):
 
     def on_clock(self):
        now = self.clock.recv_pyobj()
+       self.logger.info("on_clock(): %s %s" % (now,self.actorName))
        msg = (self.actorName,self.messageCounter)
        self.PubPort.send_pyobj(msg)
        self.logger.info("Publish %s %s" % (self.actorName,self.messageCounter))
