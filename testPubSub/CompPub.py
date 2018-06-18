@@ -14,10 +14,9 @@ class CompPub(Component):
         except OSError:
             pass
 
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
         self.fh = logging.FileHandler(logpath)
         self.fh.setLevel(logging.DEBUG)
+        self.fh.setFormatter(self.logformatter)
         self.logger.addHandler(self.fh)
 
         self.logger.info("(PID %s) - starting CompPub",str(self.pid))
@@ -27,7 +26,7 @@ class CompPub(Component):
 
     def on_clock(self):
        now = self.clock.recv_pyobj()
-       msg = self.messageCounter
+       msg = (self.actorName,self.messageCounter)
        self.PubPort.send_pyobj(msg)
        self.logger.info("Publish %s %s" % (self.actorName,self.messageCounter))
        self.messageCounter += 1

@@ -14,10 +14,9 @@ class CompSub(Component):
         except OSError:
             pass
 
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
         self.fh = logging.FileHandler(logpath)
         self.fh.setLevel(logging.DEBUG)
+        self.fh.setFormatter(self.logformatter)
         self.logger.addHandler(self.fh)
 
         self.logger.info("(PID %s) - starting CompSub",str(self.pid))
@@ -26,7 +25,7 @@ class CompSub(Component):
 
     def on_SubPort(self):
         msg = self.SubPort.recv_pyobj()
-        self.logger.info("Subscribe %s %s" % (self.actorName,str(msg)))
+        self.logger.info("Subscribe %s %s" % msg)
 
     def __destroy__(self):
         self.logger.info("(PID %s) - stopping CompSub",str(self.pid))
