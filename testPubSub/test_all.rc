@@ -1,5 +1,6 @@
 w 5
 f /home/riaps/riaps-tests/testPubSub
+e Testing 1 to 1 local
 m test_1_1_local.riaps
 d testLocal_1.depl
 l testPubSub
@@ -7,6 +8,7 @@ w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing 1 to 1 remote
 m test_1_1_remote.riaps
 d testRemote_1.depl
 l testPubSub
@@ -14,6 +16,7 @@ w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing 1 to N local
 m test_1_N_local.riaps
 d testLocal_N.depl
 l testPubSub
@@ -21,6 +24,7 @@ w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing N to 1 local
 m test_N_1_local.riaps
 d testLocal_N.depl
 l testPubSub
@@ -28,6 +32,7 @@ w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing N to N local
 m test_N_N_local.riaps
 d testLocal_N.depl
 l testPubSub
@@ -35,6 +40,7 @@ w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing 1 to N remote
 m test_1_N_remote.riaps
 d testRemote_N.depl
 l testPubSub
@@ -42,17 +48,20 @@ w 30
 h testPubSub
 r testPubSub
 w 10
-m test_1_N_remote.riaps
+e Testing N to 1 remote
+m test_N_1_remote.riaps
 d testRemote_N.depl
 l testPubSub
 w 30
 h testPubSub
 r testPubSub
 w 10
+e Testing N to N remote
 m test_N_N_remote.riaps
 d testRemote_N.depl
 l testPubSub
 w 30
 h testPubSub
 r testPubSub
+e Tests Complete
 q
