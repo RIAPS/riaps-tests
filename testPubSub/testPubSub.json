@@ -3,7 +3,7 @@
         "ActorA":{
             "formals":[
                 {
-                    "default":"ActorA",
+                    "default":"1_1_remote_ActorA",
                     "name":"logfile"
                 }
             ],
@@ -30,7 +30,7 @@
         "ActorB":{
             "formals":[
                 {
-                    "default":"ActorB",
+                    "default":"1_1_remote_ActorB",
                     "name":"logfile"
                 }
             ],

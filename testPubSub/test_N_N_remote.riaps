@@ -11,29 +11,25 @@ app testPubSub{
 		sub SubPort : Topic1;
 	}
 
-	actor ActorA(logfile = "N_N_local_ActorA") {
-		local Topic1;
+	actor ActorA(logfile = "N_N_remote_ActorA") {
 		{
 			CompA : CompPub(logfile = logfile);
 		}
 	}
 
-	actor ActorB(logfile = "N_N_local_ActorB") {
-		local Topic1;
+	actor ActorB(logfile = "N_N_remote_ActorB") {
 		{
 			CompB : CompPub(logfile = logfile);
 		}
 	}
 
-	actor ActorC(logfile = "N_N_local_ActorC") {
-		local Topic1;
+	actor ActorC(logfile = "N_N_remote_ActorC") {
 		{
 			CompC : CompSub(logfile = logfile);
 		}
 	}
 
-	actor ActorD(logfile = "N_N_local_ActorD") {
-		local Topic1;
+	actor ActorD(logfile = "N_N_remote_ActorD") {
 		{
 			CompD : CompSub(logfile = logfile);
 		}

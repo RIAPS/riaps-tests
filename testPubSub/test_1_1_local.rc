@@ -1,8 +1,0 @@
-w 5
-f /home/riaps/riaps-tests/testPubSub
-m test_1_1_local.riaps
-d testLocal.depl
-l testPubSub
-w 20
-h testPubSub
-q

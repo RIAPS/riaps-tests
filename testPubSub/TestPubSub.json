@@ -3,7 +3,7 @@
         "ActorA":{
             "formals":[
                 {
-                    "default":"ActorA",
+                    "default":"1_N_local_ActorA",
                     "name":"logfile"
                 }
             ],
@@ -19,7 +19,11 @@
                 }
             },
             "internals":[],
-            "locals":[],
+            "locals":[
+                {
+                    "type":"Topic1"
+                }
+            ],
             "usage":{
                 "cpu":{},
                 "mem":{},
@@ -30,7 +34,7 @@
         "ActorB":{
             "formals":[
                 {
-                    "default":"ActorB",
+                    "default":"1_N_local_ActorB",
                     "name":"logfile"
                 }
             ],
@@ -46,7 +50,73 @@
                 }
             },
             "internals":[],
-            "locals":[],
+            "locals":[
+                {
+                    "type":"Topic1"
+                }
+            ],
+            "usage":{
+                "cpu":{},
+                "mem":{},
+                "net":{},
+                "spc":{}
+            }
+        },
+        "ActorC":{
+            "formals":[
+                {
+                    "default":"1_N_local_ActorC",
+                    "name":"logfile"
+                }
+            ],
+            "instances":{
+                "CompB":{
+                    "actuals":[
+                        {
+                            "name":"logfile",
+                            "param":"logfile"
+                        }
+                    ],
+                    "type":"CompSub"
+                }
+            },
+            "internals":[],
+            "locals":[
+                {
+                    "type":"Topic1"
+                }
+            ],
+            "usage":{
+                "cpu":{},
+                "mem":{},
+                "net":{},
+                "spc":{}
+            }
+        },
+        "ActorD":{
+            "formals":[
+                {
+                    "default":"1_N_local_ActorD",
+                    "name":"logfile"
+                }
+            ],
+            "instances":{
+                "CompB":{
+                    "actuals":[
+                        {
+                            "name":"logfile",
+                            "param":"logfile"
+                        }
+                    ],
+                    "type":"CompSub"
+                }
+            },
+            "internals":[],
+            "locals":[
+                {
+                    "type":"Topic1"
+                }
+            ],
             "usage":{
                 "cpu":{},
                 "mem":{},

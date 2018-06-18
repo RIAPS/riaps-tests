@@ -12,15 +12,15 @@ app testPubSub{
 	}
 
 
-	actor ActorA(logfile = "ActorA") {
-		//local Topic1;
+	actor ActorA(logfile = "1_1_local_ActorA") {
+		local Topic1;
 		{
 			CompA : CompPub(logfile = logfile);
 		}
 	}
 
-	actor ActorB(logfile = "ActorB") {
-		//local Topic1;
+	actor ActorB(logfile = "1_1_local_ActorB") {
+		local Topic1;
 		{
 			CompB : CompSub(logfile = logfile);
 		}
