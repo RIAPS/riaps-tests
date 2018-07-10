@@ -1,6 +1,6 @@
 // RIAPS Timer test
 
-app TimerS {
+app testTimer {
 	message Tick;
 
 	// Period timer component
