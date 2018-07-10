@@ -1,8 +1,0 @@
-w 10
-f /home/riaps/riaps-tests/testPubSub
-m model.riaps
-d model.depl
-l testPubSub
-w 20
-h testPubSub
-q
