@@ -1,0 +1,37 @@
+//For initial capability Test 7.1.1.2.4
+app testPubSub{
+	message Topic1;
+
+	component CompPub(logfile = "") {
+		pub PubPort : Topic1;
+		timer clock 1000;
+	}
+
+	component CompSub(logfile = "") {
+		sub SubPort : Topic1;
+	}
+
+	actor ActorA(logfile = "N_1_remote_ActorA") {
+		{
+			CompA : CompSub(logfile = logfile);
+		}
+	}
+
+	actor ActorB(logfile = "N_1_remote_ActorB") {
+		{
+			CompB : CompPub(logfile = logfile);
+		}
+	}
+
+	actor ActorC(logfile = "N_1_remote_ActorC") {
+		{
+			CompB : CompPub(logfile = logfile);
+		}
+	}
+
+	actor ActorD(logfile = "N_1_remote_ActorD") {
+		{
+			CompB : CompPub(logfile = logfile);
+		}
+	}
+}
