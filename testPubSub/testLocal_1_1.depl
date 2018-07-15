@@ -1,0 +1,3 @@
+app NAME {
+    on (HOST) Pub, Sub;
+}
