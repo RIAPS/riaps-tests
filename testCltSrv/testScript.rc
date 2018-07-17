@@ -5,4 +5,5 @@ d cltsrv.depl
 l testCltSrv
 w 20
 h testCltSrv
+r testCltSrv
 q
