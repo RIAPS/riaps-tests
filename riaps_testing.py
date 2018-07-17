@@ -1,3 +1,5 @@
+"""RIAPS testing helper methods
+"""
 import os
 import sys
 import yaml
@@ -13,35 +15,67 @@ for key in {"hosts", "username", "password", "logPath", "logPrefix"}:
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-def parseString(str, name, folder, riaps, depl):
+def parseString(str, name):
+    """Replace keywords in string (commonly the contents of a file)
+
+    This is a helper method for the runTest(...) method. It will automatically replace
+    any keywords with the appropriate strings to automate testing.
+
+    Args:
+        str  (str): The string in which to replace keywords
+        name (str): The name of the RIAPS application
+
+    Returns:
+        (str, int): The newly parsed string and the number of hosts required for running the test.
+
+    """
     str = str.replace("NAME", name)
-    str = str.replace("FOLDER", folder)
-    str = str.replace("RIAPS", riaps)
-    str = str.replace("DEPL", depl)
 
-    host = 0
-    num_hosts = len(config['hosts'])
+    num_hosts = 0
     while str.find("HOST") != -1:
-        assert host < num_hosts, "More hosts required than provided"
-        str = str.replace("HOST", config['hosts'][host], 1)
-        host+=1
+        assert host < len(config['hosts']), "More hosts required than provided"
+        # Replace the first instance of HOST with the next available host
+        str = str.replace("HOST", config['hosts'][num_hosts], 1)
+        num_hosts += 1
 
-    return (str, host)
+    return (str, num_hosts)
 
 def runTest(name, folder, riaps, depl, startupTime=10, runTime=30, cleanupTime=10):
+    """Run a RIAPS application on BBB hosts
+
+    Args:
+        name   (str): The name of RIAPS application
+        folder (str): Path to the folder containing the riaps and depl files
+        riaps  (str): Name of the riaps file containing the application model
+        depl   (str): Name of the depl file containing the application deployment
+        startupTime (int, optional): Time to wait for nodes to connect to riaps_ctrl. Defaults to 10 seconds.
+        runTime     (int, optional): Time to let application run. Defaults to 30 seconds.
+        cleanupTime (int, optional): Time to wait after halting the application. Defaults to 10 seconds.
+
+    Returns:
+        dictionary: A dictionary where the keys are the names of the log files collected. Each element is a
+            a list of strings representing the lines of the log file.
+
+    Raises:
+        AssertionError: Raised if any invalid arguments are passed or if a test fails.
+
+    """
     # Verify that arguments point to valid files
     assert name != "" and not (' ' in name), "Invalid test name: %s" % name
-    if not os.path.isabs(folder):
-        folder = os.path.join(os.getcwd(), folder)
     assert os.path.isdir(os.path.join(folder)), "Failed to find test folder: %s" % folder
     assert os.path.isfile(os.path.join(folder, riaps)), "Failed to find test riaps file: %s" % riaps
     assert os.path.isfile(os.path.join(folder, depl)), "Failed to find depl file: %s" % depl
+
+    # Force folder to be an absolute path
+    if not os.path.isabs(folder):
+        folder = os.path.join(os.getcwd(), folder)
 
     # Verify that all hosts are accessible
     for host in config['hosts']:
         print("Verifying connection to %s" % host)
         try:
             client.connect(host, username=config['username'], password=config['password'])
+            # Remove any existing logs in the logPath
             client.exec_command("sudo rm -rf %s" % os.path.join(config['logPath'], config['logPrefix']))
         except:
             assert False, "Failed to connect host: %s" % host
@@ -57,8 +91,8 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=30, cleanupTime=1
     file.close()
 
     # Parse files
-    model, num_hosts = parseString(model, name, folder, riaps, depl)
-    deployment, num_hosts = parseString(deployment, name, folder, riaps, depl)
+    model, num_hosts = parseString(model, name)
+    deployment, num_hosts = parseString(deployment, name)
 
     # Write parsed files
     file = open(os.path.join(folder, "test.riaps"), "w")
@@ -91,6 +125,7 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=30, cleanupTime=1
         host = config['hosts'][i]
         print("Collecting logs from %s" % host)
         try:
+            # Find all log files on the target host
             client.connect(host, username=config['username'], password=config['password'])
             stdin, stdout, stderr = client.exec_command("ls %s" % os.path.join(config['logPath'], config['logPrefix']))
             for line in stderr:
@@ -109,5 +144,4 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=30, cleanupTime=1
             assert False, "Failed to retrieve logs from host: %s" % host
         finally:
             client.close()
-    print("Starting log processing!")
     return logs

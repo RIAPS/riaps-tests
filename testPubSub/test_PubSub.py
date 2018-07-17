@@ -1,8 +1,22 @@
+"""RIAPS Pub Sub messaging model tests
+"""
 from riaps_testing import runTest
 
 def verifyResults(results, numPub, numSub):
+    """Verify that test results match the expected behavior of the Pub Sub model
+
+    Parses the returned log files to find all messages send by each publisher. Then asserts that
+    each message sent by each publisher was received by each subscriber.
+
+    Args:
+        results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
+        numPub  (int): The number of expected publishers
+        numSub  (int): The number of expected subscribers
+
+    """
     pubs = {}
     subs = {}
+    # Parse log files
     for key in results.keys():
         keyword = ""
         if key.find("Pub") != -1:
@@ -30,8 +44,10 @@ def verifyResults(results, numPub, numSub):
                         if not pub_id in subs[id]:
                             subs[id][pub_id] = []
                         subs[id][pub_id].append(msg)
+    # Verify expected number of publishers and subscribers
     assert len(pubs) == numPub, "Incorrect number of pubs: Expected %d but found %d" % (numPub, len(pubs))
     assert len(subs) == numSub, "Incorrect number of subs: Expected %d but found %d" % (numSub, len(subs))
+    # Iterate over subscribers to verify delievery of publisher messages
     for sub in subs.keys():
         for pub in pubs.keys():
             assert pub in subs[sub], "Sub #%s didn't receive any messages from Pub #%s" % (sub, pub)
