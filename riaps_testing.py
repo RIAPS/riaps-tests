@@ -33,7 +33,7 @@ def parseString(str, name):
 
     num_hosts = 0
     while str.find("HOST") != -1:
-        assert host < len(config['hosts']), "More hosts required than provided"
+        assert num_hosts < len(config['hosts']), "More hosts required than provided"
         # Replace the first instance of HOST with the next available host
         str = str.replace("HOST", config['hosts'][num_hosts], 1)
         num_hosts += 1
