@@ -30,4 +30,4 @@ class CompSub(Component):
         self.logger.info("Subscribe " + str(self.id) + " %d %s" % msg)
 
     def __destroy__(self):
-        self.logger.info("Stopping CompSub %d" % str(self.id))
+        self.logger.info("Stopping CompSub %d" % self.id)

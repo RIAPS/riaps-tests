@@ -36,4 +36,4 @@ class CompPub(Component):
 
 
     def __destroy__(self):
-        self.logger.info("Stopping CompPub %d" % str(self.id))
+        self.logger.info("Stopping CompPub %d" % self.id)
