@@ -25,7 +25,7 @@ def verifyResults(results, numPub, numSub):
             keyword = "Subscribe"
         if keyword != "":
             assert results[key][0].find("Starting") != -1, "First line of %s isn't starting!" % key
-            #assert results[key][-1].find("Stopping") != -1, "Last line of %s isn't stopping!" % key
+            assert results[key][-1].find("Stopping") != -1, "Last line of %s isn't stopping!" % key
             for line in results[key]:
                 if line.find(keyword) != -1:
                     parts = line.split(" ")

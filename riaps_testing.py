@@ -111,6 +111,7 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=30, cleanupTime=1
     file.write("l %s\n" % name)
     file.write("w %d\n" % runTime)
     file.write("h %s\n" % name)
+    file.write("w %s\n" % cleanupTime)
     file.write("r %s\n" % name)
     file.write("w %s\n" % cleanupTime)
     file.write("q\n")
