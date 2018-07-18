@@ -1,0 +1,5 @@
+app NAME {
+	on (HOST) ServerActor;
+	on (HOST) ClientActor;
+	on (HOST) ClientActor;
+}
