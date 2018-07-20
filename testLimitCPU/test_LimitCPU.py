@@ -4,6 +4,7 @@ def test_LimitCPU():
     """Test RIAPS CPU limit handler
     """
     results = riaps_testing.runTest("test_LimitCPU", "testLimitCPU", "cpulimit.riaps", "cpulimit.depl")
+    assert len(results) != 0, "Failed to retrieve any logs!"
     for key in results.keys():
         log = results[key]
         assert log[0].find("Starting") != -1, "First line of %s isn't starting!" % key
