@@ -1,9 +1,0 @@
-w 10
-f /home/riaps/riaps-tests/testQryAns
-m qryans.riaps
-d qryans.depl
-l testQryAns
-w 20
-h testQryAns
-r testQryAns
-q
