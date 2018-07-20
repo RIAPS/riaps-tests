@@ -10,24 +10,44 @@ import time
 class MemLimit(Component):
     def __init__(self):
         super(MemLimit, self).__init__()
-        self.logger.info('MemLimit[%d]', os.getpid())
+        self.id = random.randint(0,10000)
+        logpath = '/tmp/riaps_MemLimit_%d.log' % self.id
+        try:
+            os.remove(logpath)
+        except OSError:
+            pass
+
+        self.fh = logging.FileHandler(logpath)
+        self.fh.setLevel(logging.DEBUG)
+        formatter = logging.Formatter("%(message)s")
+        self.fh.setFormatter(formatter)
+        self.logger.addHandler(self.fh)
+
+        self.logger.info("Starting MemLimit %d" % self.id)
         self.chain = []
-        self.delta = 64 * 1024 * 1024 # 64MB
+        self.delta = 35 * 1024 * 1024 # 35MB
+        self.size = 0
+
+        self.ticks = 0
             
     def waste(self):
         arr = bytearray(self.delta)
-        self.chain.append(arr)        
+        self.chain.append(arr)
+        self.size += self.delta   
         
     def on_ticker(self):
-        trg = self.ticker.recv_pyobj()              # Receive time (as float)
-        now = time.time() 
-        self.logger.info('on_ticker():%s at %s, waste = %d' % (trg,now,self.delta*len(self.chain)))
+        self.ticks += 1
+        self.logger.info('Tick %d' % self.size)
+        trg = self.ticker.recv_pyobj() # Receive time (as float)
+        now = time.time()
         self.waste()
         
-    def handleCPULimit(self):
-        self.logger.info('handleCPULimit() - ignore')
-        
     def handleMemLimit(self):
-        self.chain = self.chain[:1]            # Throttle back  
-        self.logger.info('handleMemLimit(): waste = %d' %(self.delta*len(self.chain)))
+        if self.ticks > 2: # Ignore back to back warnings
+            self.ticks = 0
+            self.logger.info('Limit %d' % self.size)
+            self.chain = self.chain[:1] # Throttle back  
+            self.size = self.delta
    
+    def __destroy__(self):
+        self.logger.info("Stopping MemLimit %d" % self.id)
