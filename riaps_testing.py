@@ -40,7 +40,7 @@ def parseString(str, name):
 
     return (str, num_hosts)
 
-def runTest(name, folder, riaps, depl, startupTime=20, runTime=90, cleanupTime=20):
+def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=10):
     """Run a RIAPS application on BBB hosts
 
     Args:
