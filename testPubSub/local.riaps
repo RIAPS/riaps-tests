@@ -1,0 +1,41 @@
+app NAME {
+	message Topic1;
+
+	component CompPub(logfile) {
+		pub PubPort : Topic1;
+		timer clock 1000;
+	}
+
+	component CompSub(logfile) {
+		sub SubPort : Topic1;
+	}
+
+	actor Pub(logfile = "Pub") {
+		local Topic1;
+		{
+			Publisher : CompPub(logfile = logfile);
+		}
+	}
+
+	actor Sub(logfile = "Sub") {
+		local Topic1;
+		{
+			Subscriber : CompSub(logfile = logfile);
+		}
+	}
+
+	actor Pub2(logfile = "Pub") {
+		local Topic1;
+		{
+			Publisher : CompPub(logfile = logfile);
+		}
+	}
+
+	actor Sub2(logfile = "Sub") {
+		local Topic1;
+		{
+			Subscriber : CompSub(logfile = logfile);
+		}
+	}
+
+}

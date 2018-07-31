@@ -1,0 +1,5 @@
+app NAME {
+	on (HOST) AnswerActor;
+	on (HOST) QueryActor;
+	on (HOST) QueryActor;
+}
