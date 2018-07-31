@@ -1,0 +1,8 @@
+hosts:
+  - bbb-3ed2.local
+  - bbb-266a.local
+  - bbb-9cbd.local
+username: "riaps"
+password: "riaps"
+logPath: "/tmp"
+logPrefix: "riaps_*"

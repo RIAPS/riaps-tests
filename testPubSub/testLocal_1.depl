@@ -1,3 +1,0 @@
-app testPubSub {
-    on (bbb-3ed2.local) ActorA, ActorB;
-}

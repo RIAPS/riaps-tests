@@ -1,12 +1,13 @@
-#CompSub.py
+#
 from riaps.run.comp import Component
-import os
+from riaps.run.exc import PortError
 import logging
+import os
 import random
 
-class CompSub(Component):
+class Server(Component):
     def __init__(self, logfile):
-        super(CompSub, self).__init__()
+        super(Server, self).__init__()
         self.id = random.randint(0,10000)
 
         logpath = '/tmp/riaps_%s_%d.log' % (logfile, self.id)
@@ -21,13 +22,14 @@ class CompSub(Component):
         self.fh.setFormatter(formatter)
         self.logger.addHandler(self.fh)
 
-        self.logger.info("Starting CompSub %d" % self.id)
+        self.logger.info("Starting Server %d" % self.id)
 
-        self.actorName = logfile
-
-    def on_SubPort(self):
-        msg = self.SubPort.recv_pyobj()
-        self.logger.info("Subscribe " + str(self.id) + " %d %s" % msg)
+    def on_srvRepPort(self):
+        msg = self.srvRepPort.recv_pyobj()
+        self.logger.info("Req %d %d" % msg)
+        rep = (self.id, msg[0], msg[1]*2)
+        self.logger.info('Rep %d %d %d' % rep)
+        self.srvRepPort.send_pyobj(rep)
 
     def __destroy__(self):
-        self.logger.info("Stopping CompSub %d" % self.id)
+        self.logger.info("Stopping Server %d" % self.id)

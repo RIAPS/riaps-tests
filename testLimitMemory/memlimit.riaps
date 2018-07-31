@@ -1,0 +1,20 @@
+app NAME {
+
+	message Dummy;
+
+	// MemLimit test component
+    component MemLimit {
+      timer ticker 1000; 
+    }
+
+    // LimitActor
+    actor LimitActor {
+    	uses {
+	        mem 200 mb;	// Mem limit
+		}
+      	{
+            memLimited : MemLimit;
+       	}
+   	 }
+        
+}
