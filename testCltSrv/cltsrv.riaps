@@ -1,6 +1,6 @@
 // RIAPS Client Server
 
-app testCltSrv {
+app NAME {
     message CltReq;
     message SrvRep;
 
