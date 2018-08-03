@@ -1,0 +1,27 @@
+//Written for Initial Capability Test Plan M1.2.1
+//Test 7.1.1.2.2
+
+app NAME {
+    message ReqMsg;
+    message RepMsg;
+
+
+    component CompReq(logfile) {
+    	req reqPort : (ReqMsg,RepMsg);
+    	timer clock 1000;
+    }
+
+
+    component CompRep(logfile) {
+    	rep repPort : (ReqMsg,RepMsg);
+    }
+
+    actor ActorA {
+      local ReqMsg, RepMsg;
+      {
+    		requestor : CompReq(logfile = "Req");
+    		replier : CompRep(logfile = "Rep");
+    	}
+    }
+
+}
