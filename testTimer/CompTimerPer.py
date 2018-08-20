@@ -16,6 +16,7 @@ class CompTimerPer(Component):
         except OSError:
             pass
 
+
         self.fh = logging.FileHandler(logpath)
         self.fh.setLevel(logging.DEBUG)
         formatter = logging.Formatter("%(message)s")
@@ -33,18 +34,18 @@ class CompTimerPer(Component):
         per = self.periodic.getPeriod()
         self.logger.info('Periodic %s %s',now,per)
         self.messageCounter += 1
-        if self.messageCounter > 10:
-            self.logger.info('Setting period...')
+        if self.messageCounter >= 10:
+            # self.logger.info('Setting period...')
             self.periodic.setPeriod(5.0)
-            if self.messageCounter > 12:
+            if self.messageCounter >= 12:
                 self.periodic.halt()
-                self.logger.info('Periodic halt')
+                self.logger.info('Halt')
 
 
     def on_restart(self):
         msg = self.restart.recv_pyobj()
         self.periodic.launch()
-        self.logger.info('Periodic launch')
+        self.logger.info('Launch')
 
 
 

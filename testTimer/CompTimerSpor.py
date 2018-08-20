@@ -34,7 +34,7 @@ class CompTimerSpor(Component):
 
     def on_ticker(self):
         now = self.ticker.recv_pyobj()              # Receive message
-        self.logger.info('Got ticker')
+        # self.logger.info('Got ticker')
         self.sporadic.setDelay(4.0)
         delay1 = self.sporadic.getDelay()
         self.sporadic.setDelay(0.5)
