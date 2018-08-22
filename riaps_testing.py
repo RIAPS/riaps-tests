@@ -4,6 +4,9 @@ import os
 import sys
 import yaml
 import paramiko
+import zmq
+import time
+import threading
 
 stream = open('riaps_testing_config.yml', 'r')
 config = yaml.load(stream)
@@ -14,6 +17,10 @@ for key in {"hosts", "username", "password", "logPath", "logPrefix"}:
 # Configure SSH
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+#Create ZMQ context
+
+ctx = zmq.Context()
 
 def parseString(str, name):
     """Replace keywords in string (commonly the contents of a file)
@@ -40,7 +47,17 @@ def parseString(str, name):
 
     return (str, num_hosts)
 
-def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=10):
+def powerCycleControl(hostname, events):
+    sock = ctx.socket(zmq.REQ)
+    sock.connect('tcp://'+config['hosts'][hostNum]+':2234')
+    msg = ('power',1) #second field is arbitrary for now, there in case one node could turn off multiple others
+
+    for timediff in events:
+        time.sleep(timediff)
+        sock.send_pyobj(msg)
+        assert sock.recv_pyobj() == 'Powercycle sent', "Powercycle failed for timediff: %d" % timediff
+
+def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=10, powerTiming=None):
     """Run a RIAPS application on BBB hosts
 
     Args:
@@ -51,6 +68,10 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=1
         startupTime (int, optional): Time to wait for nodes to connect to riaps_ctrl. Defaults to 10 seconds.
         runTime     (int, optional): Time to let application run. Defaults to 30 seconds.
         cleanupTime (int, optional): Time to wait after halting the application. Defaults to 10 seconds.
+        powerTiming (dic, optional): An (int):(list) dict of timing to cycle power on nodes.
+            The key is which index in the list of configured hosts (starting from zero) is sending the power signal.
+            The list is the amount of time slept (secs) between power signals being sent, starting concurrently
+                with riaps_ctrl.
 
     Returns:
         dictionary: A dictionary where the keys are the names of the log files collected. Each element is a
@@ -101,7 +122,7 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=1
     file = open(os.path.join(folder, "test.depl"), "w")
     file.write(deployment)
     file.close()
-    
+
     # Create test.rc file
     file = open("test.rc", "w")
     file.write("w %d\n" % startupTime)
@@ -117,8 +138,20 @@ def runTest(name, folder, riaps, depl, startupTime=10, runTime=45, cleanupTime=1
     file.write("q\n")
     file.close()
 
+    if powerTiming is not None:
+        threadPool = []
+        for key in powerTiming:
+            threadPool.append(threading.Thread(target=powerCycleControl,args=(key,powerTiming[key])))
+        for thread in threadPool:
+            thread.start()
+
     # Launch riaps_ctrl
     assert os.system("riaps_ctrl test.rc") == 0, "Error while running riaps_ctrl"
+
+    if powerTiming is not None:
+        for thread in threadPool:
+            thread.join(timeout=1.0)
+            assert thread.is_alive() == False, "A powerCycleControl thread failed to close!"
 
     # Collect logs
     logs = {}
