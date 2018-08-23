@@ -39,6 +39,7 @@ class CompReq(Component):
                 self.messageCounter += 1
             except PortError e:
                 self.logger.info("REQ port error")
+                self.lock.release()
 
     def on_reqPort(self):
         msg = self.reqPort.recv_pyobj()
