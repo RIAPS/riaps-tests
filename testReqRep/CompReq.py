@@ -33,9 +33,12 @@ class CompReq(Component):
         self.logger.info("on_clock(): %s %s" % (now,self.actorName))
         if self.lock.acquire(blocking=False):
             msg = (self.id,self.messageCounter)
-            self.reqPort.send_pyobj(msg)
-            self.logger.info("Request %d %s" % msg)
-            self.messageCounter += 1
+            try:
+                self.reqPort.send_pyobj(msg)
+                self.logger.info("Request %d %s" % msg)
+                self.messageCounter += 1
+            except PortError e:
+                self.logger.info("REQ port error")
 
     def on_reqPort(self):
         msg = self.reqPort.recv_pyobj()
