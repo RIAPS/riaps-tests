@@ -1,5 +1,3 @@
-[![Build Status](http://riaps-build.isis.vanderbilt.edu:2233/job/RIAPS/job/riaps-tests/job/update-hosts/badge/icon)](http://riaps-build.isis.vanderbilt.edu:2233/job/RIAPS/job/riaps-tests/job/update-hosts/)
-
 # riaps-tests
 Repository for code used to test the riaps-platform
 
