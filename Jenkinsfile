@@ -44,7 +44,7 @@ pipeline {
         }
         // Install deb packages to localhost and BBBs
         sh '''#!/bin/bash
-          fab -f riaps-pycom/bin/fabfile -H 127.0.0.1 riaps.install
+          fab -f riaps-pycom/bin/fabfile -H 127.0.0.1 riaps.install sys.sudo:"sed -i 's/eth0/enp0s8/g' /usr/local/riaps/etc/riaps.conf"
           fab -f riaps-pycom/bin/fabfile -H $(python3 read_hosts.py) riaps.kill riaps.install deplo.start
         '''
       }
