@@ -13,16 +13,33 @@ pipeline {
             wget https://github.com/gruntwork-io/fetch/releases/download/v0.1.1/fetch_linux_amd64
             chmod +x fetch_linux_amd64
             source version.sh
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-externals/" --tag="$externalsversion" --release-asset="riaps-externals-armhf.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-externals/" --tag=$externalsversion --release-asset="riaps-externals-amd64.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-core" --tag=$coreversion --release-asset="riaps-core-amd64.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-core" --tag=$coreversion --release-asset="riaps-core-armhf.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-pycom" --tag=$pycomversion --release-asset="riaps-pycom-amd64.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-pycom" --tag=$pycomversion --release-asset="riaps-pycom-armhf.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-pycom" --tag=$pycomversion --release-asset="riaps-systemd-armhf.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-pycom" --tag=$pycomversion --release-asset="riaps-systemd-amd64.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-timesync" --tag=$timesyncversion --release-asset="riaps-timesync-amd64.deb" .
-            ./fetch_linux_amd64 --repo="https://github.com/RIAPS/riaps-timesync" --tag=$timesyncversion --release-asset="riaps-timesync-armhf.deb" .
+            function fetch () {
+              wget -q $JENKINS_URL/job/RIAPS/job/$1/job/$2/lastSuccessfulBuild/artifact/$3
+              if [ $? -ne 0 ]
+              then
+                # Failed to find artifact on Jenkins, so check GitHub
+                ./fetch_linux_amd64 --repo="https://github.com/RIAPS/$1/" --tag="$2" --release-asset="$3" .
+                if [ $? -ne 0 ]
+                then
+                  echo "Failed to find $1/$2/$3 on Jenkins or GitHub"
+                  exit 1
+                else
+                  echo "Downloaded $1/$2/$3 from GitHub"
+                fi
+              else
+                echo "Downloaded $1/$2/$3 from Jenkins"
+              fi
+            }
+            fetch riaps-externals $externalsversion riaps-externals-armhf.deb
+            fetch riaps-externals $externalsversion riaps-externals-amd64.deb
+            fetch riaps-core $coreversion riaps-core-armhf.deb
+            fetch riaps-core $coreversion riaps-core-amd64.deb
+            fetch riaps-pycom $pycomversion riaps-pycom-armhf.deb
+            fetch riaps-pycom $pycomversion riaps-pycom-amd64.deb
+            fetch riaps-pycom $pycomversion riaps-systemd-armhf.deb
+            fetch riaps-pycom $pycomversion riaps-systemd-amd64.deb
+            fetch riaps-timesync $timesyncversion riaps-timesync-armhf.deb
+            fetch riaps-timesync $timesyncversion riaps-timesync-amd64.deb
           '''
         }
         // Install deb packages to localhost and BBBs
