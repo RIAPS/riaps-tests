@@ -36,7 +36,7 @@ def test_Timer():
                             assert abs(currTime - lastTime -1.0) < 0.5, "Timer error greater than 0.5s"
                     if periodicTimerCounter < 12:
                         assert parts[2] == '5.0', "getPeriod() returned wrong value(%d) or setPeriod() failed" % int(parts[2])
-                        periodicTimerCounter > 10:
+                        if periodicTimerCounter > 10:
                             assert abs(currTime - lastTime - 5.0) < 0.5, "Timer error greater than 0.5s"
                 elif line.find("Halt"):
                     timerRunning = False
