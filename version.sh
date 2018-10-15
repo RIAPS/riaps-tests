@@ -1,4 +1,4 @@
-export externalsversion="0.7.3" 
-export coreversion="0.8.5"
-export pycomversion="0.8.1"
+export externalsversion="master" 
+export coreversion="1.1.10"
+export pycomversion="1.1.10"
 export timesyncversion="1.1.9"
