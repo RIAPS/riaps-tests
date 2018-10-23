@@ -8,30 +8,38 @@ def verifyResults(results):
     Args:
         results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
     """
+
+    reqComponentRan = False
     for key in results:
         if key.find("Req") != -1:
+            reqComponentRan = True
             reqResults = results[key]
+            assert reqResults[-1].find("Stopping") != -1, "Last line of request component isn't \"Stopping\"!"
+            assert reqResults[0].find("Starting") != -1, "First line of request component isn't \"Starting\"!"
         elif key.find("Rep") != -1:
             repResults = results[key]
+            assert repResults[-1].find("Stopping") != -1, "Last line of reply component isn't \"Stopping\"!"
+            assert repResults[0].find("Starting") != -1, "First line of reply component isn't \"Starting\"!"
         else:
             assert False, "Collected log for neither Request nor Reply"
 
     requestedNum = -1
 
-    assert reqResults[0].find("Starting") != -1, "First line of request component isn't \"Starting\"!"
-    assert reqResults[-1].find("Stopping") != -1, "Last line of request component isn't \"Stopping\"!"
-    for msg in reqResults:
-        if msg.find("Starting") != -1 or msg.find("on_clock") != -1 or msg.find("Stopping") != -1:
-            continue
-        if msg.find("Request") != -1:
-            assert requestedNum == -1, "Request made without having received reply"
-            parts = msg.split(" ")
-            requestedNum = int(parts[-1])
-        elif msg.find("Report") != -1:
-            assert requestedNum != -1, "Got response without having made request"
-            parts = msg.split(" ")
-            assert int(parts[-1]) == 2*requestedNum, "Received invalid message"
-            requestedNum = -1
+    assert reqComponentRan, "No logs collected from request component"
+
+    if reqComponentRan:
+        for msg in reqResults:
+            if msg.find("Starting") != -1 or msg.find("on_clock") != -1 or msg.find("Stopping") != -1:
+                continue
+            if msg.find("Request") != -1:
+                assert requestedNum == -1, "Request made without having received reply"
+                parts = msg.split(" ")
+                requestedNum = int(parts[-1])
+            elif msg.find("Report") != -1:
+                assert requestedNum != -1, "Got response without having made request"
+                parts = msg.split(" ")
+                assert int(parts[-1]) == 2*requestedNum, "Received invalid message"
+                requestedNum = -1
 
 
 
