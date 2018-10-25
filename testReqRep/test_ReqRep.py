@@ -74,11 +74,11 @@ def runTest(name, riaps, depl):
     """
     verifyResults(riaps_testing.runTest(name, "testReqRep", riaps, depl))
 
-# def test_ReqRep_local():
-#     runTest("ReqRep_local", "local.riaps", "testLocal.depl")
-#
-# def test_ReqRep_local_single():
-#     runTest("ReqRep_local_single", "local_single.riaps", "testLocal_single.depl")
+def test_ReqRep_local():
+    runTest("ReqRep_local", "local.riaps", "testLocal.depl")
+
+def test_ReqRep_local_single():
+    runTest("ReqRep_local_single", "local_single.riaps", "testLocal_single.depl")
 
 def test_ReqRep_remote():
     runTest("ReqRep_remote", "remote.riaps", "testRemote.depl")
