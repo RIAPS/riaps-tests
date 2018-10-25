@@ -44,7 +44,7 @@ def verifyResults(results):
                 parts = msg.split(" ")
                 reportDict[int(parts[-1])/2] = msg
 
-    if reqComponentRan:
+    if repComponentRan:
         for msg in repResults:
             if msg.find("Starting") != -1 or msg.find("Stopping") != -1:
                 continue
@@ -56,7 +56,7 @@ def verifyResults(results):
         assert request in receivedDict, "Request Message \""+requestDict[request]+"\" not received by Replier"
 
     for request in receivedDict:
-        assert request in reportDict, "Reply Message not received by Requestor for sequence number"+str(request)
+        assert request in reportDict, "Reply Message not received by Requestor for sequence number: "+str(request)
 
 
 def runTest(name, riaps, depl):
