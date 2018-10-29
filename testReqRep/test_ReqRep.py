@@ -28,7 +28,7 @@ def verifyResults(results):
     assert reqComponentRan, "No logs collected from request component"
     assert repComponentRan, "No logs collected from reply component"
 
-    requestDict = {}
+    requestList = {}
     reportDict = {}
     receivedDict = {}
 
@@ -52,11 +52,21 @@ def verifyResults(results):
                 parts = msg.split(" ")
                 receivedDict[int(parts[-1])] = msg
 
+    msgCount, successCount = 0
     for request in requestDict:
-        assert request in receivedDict, "Request Message \""+requestDict[request]+"\" not received by Replier"
+        msgCount += 1
+        if request in receivedDict:
+            successCount += 1
 
+    assert successCount/msgCount > 90.0, "Less than 90% ("+successCount/msgCount+") of requests recei by Replier"
+
+    msgCount, successCount = 0
     for request in receivedDict:
-        assert request in reportDict, "Reply Message not received by Requestor for sequence number: "+str(request)
+        msgCount += 1
+        if request in reportDict:
+            successCount += 1
+
+    assert successCount/msgCount > 90.0, "Less than 90% ("+successCount/msgCount+") of replies received by Requestor"
 
 
 def runTest(name, riaps, depl):
