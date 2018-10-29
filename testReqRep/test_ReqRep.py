@@ -28,7 +28,7 @@ def verifyResults(results):
     assert reqComponentRan, "No logs collected from request component"
     assert repComponentRan, "No logs collected from reply component"
 
-    requestList = {}
+    requestDict = {}
     reportDict = {}
     receivedDict = {}
 
