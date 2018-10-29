@@ -52,21 +52,23 @@ def verifyResults(results):
                 parts = msg.split(" ")
                 receivedDict[int(parts[-1])] = msg
 
-    msgCount, successCount = 0
+    msgCount = 0
+    successCount = 0
     for request in requestDict:
         msgCount += 1
         if request in receivedDict:
             successCount += 1
 
-    assert successCount/msgCount > 90.0, "Less than 90% ("+successCount/msgCount+") of requests recei by Replier"
+    assert successCount/msgCount > 0.9, "Less than 90% ("+str(successCount/msgCount)+") of requests received by Replier"
 
-    msgCount, successCount = 0
+    msgCount = 0
+    successCount = 0
     for request in receivedDict:
         msgCount += 1
         if request in reportDict:
             successCount += 1
 
-    assert successCount/msgCount > 90.0, "Less than 90% ("+successCount/msgCount+") of replies received by Requestor"
+    assert successCount/msgCount > 0.9, "Less than 90% ("+str(successCount/msgCount)+") of replies received by Requestor"
 
 
 def runTest(name, riaps, depl):
