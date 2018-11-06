@@ -1,0 +1,19 @@
+app NAME {
+    
+    message Dummy;
+
+    // SpcLimit test component
+    component SpcLimit {
+        timer ticker 1000; 
+    }
+
+    // LimitActor
+    actor LimitActor {
+    	uses {
+		    space 5 mb;				// File space limit
+		}
+      	{
+            spcLimited : SpcLimit;
+       	}
+   	}
+}

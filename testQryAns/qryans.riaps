@@ -1,6 +1,6 @@
 // RIAPS Query Answer
 
-app testQryAns {
+app NAME {
     message QryReq;
     message AnsRep;
 
@@ -15,13 +15,13 @@ app testQryAns {
     	ans srvAnsPort : (QryReq, AnsRep);
     }
 
-    actor QueryActor(logfile = "QueryActor") {
+    actor QueryActor(logfile = "Query") {
     	{
     		Client : Query(logfile = logfile);
     	}
     }
 
-    actor AnswerActor(logfile = "AnswerActor") {
+    actor AnswerActor(logfile = "Answer") {
     	{
     		Server : Answer(logfile = logfile);
     	}

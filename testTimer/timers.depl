@@ -1,3 +1,0 @@
-app testTimer {
-    on (192.168.88.249) TimerActor;
-}

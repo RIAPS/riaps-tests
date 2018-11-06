@@ -58,7 +58,7 @@ def verifyResults(results, numPub, numSub):
                     recv += 1
             perc = recv * 100.0 / recv
             print("Sub #%s received %.1f%%(%d) of Pub #%s's messages" % (sub, perc, recv, pub))
-            assert perc > 99.9
+            assert perc > 80.0
 
 def test_PubSubLocal_1_1():
     verifyResults(runTest("PubSubLocal_1_1", "testPubSub", "local.riaps", "testLocal_1_1.depl"), 1, 1)

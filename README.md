@@ -21,7 +21,7 @@ pytest --junitxml=results.xml
 ```
 
 ## Test format
-Pytest will automatically search in any subdirectories bellow the intial directory for python modules prefixed with `test_`. In any matching modules, it will search for any methods prefixed with `test_` or suffixed with `_test`. Each matching method becomes it's own test. Pytest will call these methods one after another, recording the results. A test is considered failed if it throws any exceptions. Assert statements should be frequently used to verify the test progress.
+Pytest will automatically search in any subdirectories below the intial directory for python modules prefixed with `test_`. In any matching modules, it will search for any methods prefixed with `test_` or suffixed with `_test`. Each matching method becomes it's own test. Pytest will call these methods one after another, recording the results. A test is considered failed if it throws any exceptions. Assert statements should be frequently used to verify the test progress.
 Tests can import the `riaps_testing` module, which contains the `runTest(...)` method. This method can be passed .riaps and .depl files to automatically run RIAPS applications across BBB hosts. Tests can additionally implement any other helper methods to simplify the testing process, as long as the method name doesn't match the test format.
 ### riaps and depl file formats
 `runTest(...)` will automatically substitute any keywords found in riaps and depl files to help automate testing. These keywords are optional, but provide greater reusability across configurations.

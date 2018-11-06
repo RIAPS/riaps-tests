@@ -1,12 +1,12 @@
-#
+#CompReq.py
 from riaps.run.comp import Component
-import logging
 import os
 import random
+import logging
 
-class Answer(Component):
+class CompRep(Component):
     def __init__(self, logfile):
-        super(Answer, self).__init__()
+        super(CompRep, self).__init__()
         self.id = random.randint(0,10000)
 
         logpath = '/tmp/riaps_%s_%d.log' % (logfile, self.id)
@@ -21,14 +21,15 @@ class Answer(Component):
         self.fh.setFormatter(formatter)
         self.logger.addHandler(self.fh)
 
-        self.logger.info("Starting CompAns %d" % self.id)
+        self.logger.info("Starting CompRep %d" % self.id)
 
-    def on_srvAnsPort(self):
-        msg = self.srvAnsPort.recv_pyobj()
-        self.logger.info("Recv %d %d" % msg)
-        rep = (self.id, msg[0], msg[1]*2)
-        self.logger.info("Answer %d %d %d" % rep)
-        self.srvAnsPort.send_pyobj(rep)
+        self.actorName = logfile
+
+    def on_repPort(self):
+        msg = self.repPort.recv_pyobj()
+        self.logger.info("Received " + str(self.id) + " %d %s" % msg)
+        response = (self.id,2*msg[1])
+        self.repPort.send_pyobj(response)
 
     def __destroy__(self):
-        self.logger.info("Stopping CompAns %d" % self.id)
+        self.logger.info("Stopping CompRep %d" % self.id)

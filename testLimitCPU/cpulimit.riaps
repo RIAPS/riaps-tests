@@ -1,0 +1,19 @@
+app NAME {
+    
+    message Dummy;
+
+    // CPULimit test component
+    component CPULimit {
+        timer ticker 1000; 
+    }
+
+    // LimitActor
+    actor LimitActor {
+    	uses {
+			cpu max 10 % over 1;    // Hard limit, w/o 'max' = soft limit
+		}
+      	{
+            cpuLimited: CPULimit;
+       	}
+   	}
+}
