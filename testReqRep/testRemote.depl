@@ -1,0 +1,4 @@
+app NAME {
+  on (HOST) ActorA;
+  on (HOST) ActorB;
+}

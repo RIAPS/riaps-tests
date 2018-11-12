@@ -1,13 +1,12 @@
-#
+#CompReq.py
 from riaps.run.comp import Component
-from riaps.run.exc import PortError
-import logging
 import os
 import random
+import logging
 
-class Server(Component):
+class CompRep(Component):
     def __init__(self, logfile):
-        super(Server, self).__init__()
+        super(CompRep, self).__init__()
         self.id = random.randint(0,10000)
 
         logpath = '/tmp/riaps_%s_%d.log' % (logfile, self.id)
@@ -22,14 +21,15 @@ class Server(Component):
         self.fh.setFormatter(formatter)
         self.logger.addHandler(self.fh)
 
-        self.logger.info("Starting Server %d" % self.id)
+        self.logger.info("Starting CompRep %d" % self.id)
 
-    def on_srvRepPort(self):
-        msg = self.srvRepPort.recv_pyobj()
-        self.logger.info("Req %d %d" % msg)
-        rep = (self.id, msg[0], msg[1]*2)
-        self.logger.info('Rep %d %d %d' % rep)
-        self.srvRepPort.send_pyobj(rep)
+        self.actorName = logfile
+
+    def on_repPort(self):
+        msg = self.repPort.recv_pyobj()
+        self.logger.info("Received " + str(self.id) + " %d %s" % msg)
+        response = (self.id,2*msg[1])
+        self.repPort.send_pyobj(response)
 
     def __destroy__(self):
-        self.logger.info("Stopping Server %d" % self.id)
+        self.logger.info("Stopping CompRep %d" % self.id)

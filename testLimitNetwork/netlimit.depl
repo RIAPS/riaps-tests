@@ -1,0 +1,4 @@
+app NAME {
+	on (HOST) LimitActor;
+	on (HOST) Sink;
+}

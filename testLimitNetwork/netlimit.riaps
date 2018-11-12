@@ -1,0 +1,29 @@
+app NAME {
+    
+    message Dummy;
+
+    component NetProducerLimit {
+      timer ticker 1000;
+      pub produce : Dummy;
+     }
+    
+    component NetConsumer {
+      sub consume : Dummy;
+    }
+
+    // LimitActor
+    actor LimitActor {
+    	uses {
+			net rate 10 kbps ceil 12 kbps burst 1.2 k; // Net limits
+		}
+      	{
+          netLimited : NetProducerLimit;
+       	}
+   	 }
+
+    actor Sink {
+     	{
+     		consumer : NetConsumer;
+   		}
+	}
+}

@@ -1,30 +1,30 @@
-// RIAPS Client Server 
+// RIAPS Client Server
 
-app CltSrv {
-    message CltReq; 
+app NAME {
+    message CltReq;
     message SrvRep;
-     
+
     // Client
-    component Client {
-    	clt cltReqPort : (CltReq,SrvRep); 
+    component Client(logfile = "") {
+    	clt cltReqPort : (CltReq,SrvRep);
     	timer clock 1000;
     }
-    
+
     // Server
-    component Server {
+    component Server(logfile = "") {
     	srv srvRepPort : (CltReq, SrvRep);
     }
-    
-    actor ClientActor {
-    	{ 
-    		client : Client;
-    	}
-    }
-    
-    actor ServerActor {
+
+    actor ClientActor(logfile = "ClientActor") {
     	{
-    		server : Server;
+    		client : Client(logfile = logfile);
     	}
     }
-    
+
+    actor ServerActor(logfile = "ServerActor") {
+    	{
+    		server : Server(logfile = logfile);
+    	}
+    }
+
 }

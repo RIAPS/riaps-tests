@@ -1,0 +1,24 @@
+app NAME {
+	message Tick;
+  message	Starter;
+
+    component CompTimerPer(logfile = "") {
+      timer periodic 1000;
+      pub ticker : Tick;
+			sub restart : Starter;
+    }
+
+    component CompTimerSpor(logfile = "") {
+      sub ticker : Tick;
+			pub restarter : Starter;
+      timer sporadic;
+    }
+
+    actor TimerActor(logfile = "TimerActor") {
+		local Tick, Starter;
+      	{
+          periodic: CompTimerPer(logfile = logfile);
+          sporadic: CompTimerSpor(logfile = logfile);
+       	}
+    }
+}
