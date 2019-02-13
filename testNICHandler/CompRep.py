@@ -24,12 +24,10 @@ class CompRep(Component):
         self.logger.info("Starting CompRep %d" % self.id)
 
         self.actorName = logfile
-        self.uuid = False
 
     def handleActivate(self):
         self.uuid = self.getUUID()
         self.logger.info("My uuid: %s" % str(self.uuid))
-        self.activeComponentCount += 1
 
     def on_repPort(self):
         msg = self.repPort.recv_pyobj()

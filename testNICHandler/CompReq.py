@@ -26,7 +26,7 @@ class CompReq(Component):
 
         self.actorName = logfile
         self.uuid = False
-        self.activeComponentCount = 0
+        self.activeActorCount = 0
         self.messageCounter = 0
         self.lockReq = threading.Lock()
         self.lockNIC = threading.Lock()
@@ -34,13 +34,14 @@ class CompReq(Component):
     def handleActivate(self):
         self.uuid = self.getUUID()
         self.logger.info("My uuid: %s" % str(self.uuid))
-        self.activeComponentCount += 1
+        self.activeActorCount += 1
 
     def on_clock(self):
         now = self.clock.recv_pyobj()
         self.logger.info("on_clock(): %s %s" % (now,self.actorName))
-
-        if self.lockReq.acquire(blocking = False):
+        self.sporadic.setDelay(0.5)
+        self.sporadic.launch()
+        if self.lockReq.acquire(blocking=False):
             msg = (self.id,self.messageCounter)
             try:
                 self.logger.info("Request %d %s" % msg)
@@ -53,41 +54,24 @@ class CompReq(Component):
 
     def on_sporadic(self):
         now = self.sporadic.recv_pyobj()
-        if self.lockNIC.acquire(blocking = False):
-            try:
-                self.logger.info("Requesting NIC Kill")
-                msg = 'kill'
-                self.reqNicKill.send_pyobj(msg)
-            except PortError:
-                self.logger.info("REQ port error")
-                self.lockNIC.release()
-                self.reqNicKill.reset()
-        else:
-            self.logger.info("Could not acquire NIC req port")
+        self.logger.info("on_sporadic: %s" % str(now))
+
+        # if self.lockNIC.acquire(blocking = False):
+        #     try:
+        #         self.logger.info("Requesting NIC Kill")
+        #         msg = 'kill'
+        #         # self.reqNicKill.send_pyobj(msg)
+        #     except PortError:
+        #         self.logger.info("REQ port error")
+        #         self.lockNIC.release()
+        #         # self.reqNicKill.reset()
+        # else:
+        #     self.logger.info("Could not acquire NIC req port")
 
     def on_reqPort(self):
         msg = self.reqPort.recv_pyobj()
         self.logger.info("Report " + str(self.id) + " %d %s" % msg)
         self.lockReq.release()
-
-    def on_reqNicKill(self):
-        msg = self.reqNicKill.recv_pyobj()
-        self.logger.info("Report %s" % msg)
-        self.lockNIC.release()
-
-    def handleNICStateChange(self, state):
-        self.logger.info("New NIC state: %s" % state)
-
-    def handlePeerStateChange(self,state,uuid):
-        self.logger.info("Peer %s is %s" % (uuid,state))
-        if uuid is not self.uuid and 'on' in str(state):
-            self.activeComponentCount += 1
-            if self.activeComponentCount >= 2:
-                self.sporadic.setDelay(20)
-                self.sporadic.launch()
-
-        elif uuid is not self.uuid and 'off' in str(state):
-            self.activeComponentCount -= 1
 
     def __destroy__(self):
         self.logger.info("Stopping CompReq %d" % self.id)
