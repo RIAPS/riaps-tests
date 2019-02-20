@@ -3,7 +3,7 @@
 from riaps.run.comp import Component
 import os
 import random
-import logging
+import spdlog as spd
 import subprocess
 import time
 
@@ -12,17 +12,15 @@ class NicDevice(Component):
         super(NicDevice, self).__init__()
         self.id = random.randint(0,10000)
 
-        # logpath = '/home/riaps/riaps_%s_%d.log' % (logfile, self.id)
-        # try:
-        #     os.remove(logpath)
-        # except OSError:
-        #     pass
-        #
-        # self.fh = logging.FileHandler(logpath)
-        # self.fh.setLevel(logging.DEBUG)
-        # formatter = logging.Formatter("%(message)s")
-        # self.fh.setFormatter(formatter)
-        # self.logger.addHandler(self.fh)
+        logpath = '/tmp/riaps_%s_%d.log' % (logfile, self.id)
+        try:
+            os.remove(logpath)
+        except OSError:
+            pass
+
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting NicDevice %d" % self.id)
 
@@ -39,14 +37,9 @@ class NicDevice(Component):
     def on_repPort(self):
         msg = self.repPort.recv_pyobj()
         self.logger.info("Received %s" % msg)
-        self.logger.info("Setting NIC to down...")
         try:
-            res = subprocess.call('ifconfig eth1 down',shell=True)
-            self.logger.info("DOWN RESULT: %s" % str(res))
-            time.sleep(10)
-            self.logger.info("Setting NIC to up...")
-            res = subprocess.call('ifconfig eth1 up',shell=True)
-            self.logger.info("UP RESULT: %s" % str(res))
+            res = subprocess.call("ifconfig eth0 %s" % msg,shell=True)
+            self.logger.info("%s RESULT: %s" % (msg,str(res)))
             response = 'done'
         except Exception as e:
             response = str(e)
