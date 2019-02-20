@@ -3,6 +3,7 @@ from riaps.run.comp import Component
 import logging
 import os
 import random
+import spdlog as spd
 
 class Answer(Component):
     def __init__(self, logfile):
@@ -15,11 +16,9 @@ class Answer(Component):
         except OSError:
             pass
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompAns %d" % self.id)
 
@@ -32,3 +31,4 @@ class Answer(Component):
 
     def __destroy__(self):
         self.logger.info("Stopping CompAns %d" % self.id)
+        self.logger.flush()

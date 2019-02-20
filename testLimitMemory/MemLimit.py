@@ -4,6 +4,7 @@ import logging
 import random
 import os
 import time
+import spdlog as spd
 
 # Memory  limited component
 
@@ -17,11 +18,9 @@ class MemLimit(Component):
         except OSError:
             pass
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('MemLimit_%d' % self.id, logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting MemLimit %d" % self.id)
         self.chain = []
@@ -51,3 +50,4 @@ class MemLimit(Component):
    
     def __destroy__(self):
         self.logger.info("Stopping MemLimit %d" % self.id)
+        self.logger.flush()

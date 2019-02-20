@@ -5,6 +5,7 @@ import random
 import os
 import time
 import random, string
+import spdlog as spd
 
 # Space  limited component
 
@@ -21,11 +22,9 @@ class SpcLimit(Component):
         logpath = '/tmp/riaps_SpcLimit_%d.log' % self.id
         remove(logpath)
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('SpcLimit_%d' % self.id, logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting SpcLimit %d" % self.id)
         self.chain = []
@@ -63,3 +62,4 @@ class SpcLimit(Component):
     def __destroy__(self):
         remove(self.name)
         self.logger.info("Stopping SpcLimit %d" % self.id)
+        self.logger.flush()

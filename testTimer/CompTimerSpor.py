@@ -4,6 +4,7 @@ from riaps.run.comp import Component
 import logging
 import random
 import os
+import spdlog as spd
 
 class CompTimerSpor(Component):
     def __init__(self, logfile):
@@ -16,11 +17,9 @@ class CompTimerSpor(Component):
         except OSError:
             pass
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompTimerSpor %d" % self.id)
 
@@ -43,8 +42,9 @@ class CompTimerSpor(Component):
         running1 = self.sporadic.running()
         self.sporadic.launch()
         running2 = self.sporadic.running()
-        self.logger.info("Ticker %s %s %s %s",delay1, delay2, running1,running2)
+        self.logger.info("Ticker %s %s %s %s" % (delay1, delay2, running1,running2))
 
 
     def __destroy__(self):
         self.logger.info('Stopping...')
+        self.logger.flush()
