@@ -6,6 +6,7 @@ import random
 import spdlog as spd
 import subprocess
 import time
+import logging
 
 class NicDevice(Component):
     def __init__(self, logfile):
@@ -28,11 +29,6 @@ class NicDevice(Component):
         self.uuid = False
         self.activeComps = []
         self.activeComponentCount = 0
-
-    def handleActivate(self):
-        self.uuid = self.getUUID()
-        self.logger.info("My uuid: %s" % str(self.uuid))
-        # self.activeComponentCount += 1
 
     def on_repPort(self):
         msg = self.repPort.recv_pyobj()
@@ -61,3 +57,4 @@ class NicDevice(Component):
 
     def __destroy__(self):
         self.logger.info("Stopping NicDevice %d" % self.id)
+        self.logger.flush()
