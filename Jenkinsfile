@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_OAUTH_TOKEN')]) {
-          sh 'chmod +x update_hosts.sh && ./update_hosts.sh'
+        //withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_OAUTH_TOKEN')]) {
+          //sh 'chmod +x update_hosts.sh && ./update_hosts.sh'
         }
       }
     }
