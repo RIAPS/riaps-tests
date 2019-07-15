@@ -46,8 +46,6 @@ fetch riaps-core $coreversion riaps-core-armhf.deb
 fetch riaps-core $coreversion riaps-core-amd64.deb
 fetch riaps-pycom $pycomversion riaps-pycom-armhf.deb
 fetch riaps-pycom $pycomversion riaps-pycom-amd64.deb
-fetch riaps-pycom $pycomversion riaps-systemd-armhf.deb
-fetch riaps-pycom $pycomversion riaps-systemd-amd64.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-armhf.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-amd64.deb
 
@@ -56,4 +54,4 @@ fab -f riaps-pycom/bin/fabfile -H 127.0.0.1 riaps.install
 fab -f riaps-pycom/bin/fabfile -H $(python3 read_hosts.py) riaps.kill riaps.install deplo.start
 
 # Update riaps.conf to correct NIC name
-sudo sed -i "s/eth0/$NIC_NAME/g" /usr/local/riaps/etc/riaps.conf
+sudo sed -i "s/eth0/$NIC_NAME/g" /etc/riaps/riaps.conf
