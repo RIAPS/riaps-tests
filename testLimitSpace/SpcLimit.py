@@ -1,10 +1,11 @@
 # import riaps
 from riaps.run.comp import Component
-import logging
+import spdlog as spd
 import random
 import os
 import time
 import random, string
+import subprocess
 
 # Space  limited component
 
@@ -21,17 +22,15 @@ class SpcLimit(Component):
         logpath = '/tmp/riaps_SpcLimit_%d.log' % self.id
         remove(logpath)
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger("testLimitSpace",logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern("%v")
 
         self.logger.info("Starting SpcLimit %d" % self.id)
         self.chain = []
         self.delta = 1 # 1 MB
         self.size = self.delta
-        self.name = '/tmp/tmp.junk'
+        self.name = '/home/riaps/riaps_apps/test_LimitSpace/tmp.junk'
         remove(self.name)
 
         self.ticks = 0
@@ -39,11 +38,15 @@ class SpcLimit(Component):
             
     def waste(self):
         cmd = 'dd if=/dev/zero of=%s bs=1M count=%d' % (self.name,self.size)
-        res = os.system(cmd)
+        try:
+            res = os.system(cmd)
+        except Exception as e:
+            self.logger.info("os.system error: %s",str(e))
+        #res = subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,encoding='utf-8',shell=True)
         if res == 0:
             self.size += self.delta
         else:
-            self.logger.info("Failed %d" % (self.size))
+            self.logger.info("Failed %d with error code %d" % (self.size,res))
         
     def on_ticker(self):
         self.ticks += 1
@@ -63,3 +66,5 @@ class SpcLimit(Component):
     def __destroy__(self):
         remove(self.name)
         self.logger.info("Stopping SpcLimit %d" % self.id)
+        self.logger.flush()
+        self.logger.close()
