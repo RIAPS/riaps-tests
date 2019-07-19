@@ -10,7 +10,7 @@ import threading
 import datetime
 
 stream = open('riaps_testing_config.yml', 'r')
-config = yaml.load(stream)
+config = yaml.load(stream, Loader=yaml.SafeLoader)
 stream.close()
 for key in {"hosts", "username", "password", "logPath", "logPrefix"}:
     assert key in config, "Failed to find '%s' in configuration file" % key
