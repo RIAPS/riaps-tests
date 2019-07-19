@@ -1,10 +1,11 @@
 # import riaps
 from riaps.run.comp import Component
-import logging
+import spdlog as spd
 import random
-import os
 import time
-import random, string
+import string
+import os
+from pathlib import Path
 
 # Space  limited component
 
@@ -21,45 +22,37 @@ class SpcLimit(Component):
         logpath = '/tmp/riaps_SpcLimit_%d.log' % self.id
         remove(logpath)
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger("SpcLimit",logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern("%v")
 
         self.logger.info("Starting SpcLimit %d" % self.id)
-        self.chain = []
         self.delta = 1 # 1 MB
         self.size = self.delta
-        self.name = '/tmp/tmp.junk'
-        remove(self.name)
-
         self.ticks = 0
 
-            
-    def waste(self):
-        cmd = 'dd if=/dev/zero of=%s bs=1M count=%d' % (self.name,self.size)
-        res = os.system(cmd)
-        if res == 0:
-            self.size += self.delta
-        else:
-            self.logger.info("Failed %d" % (self.size))
-        
+        self.junkpath = '/home/riaps/riaps_apps/test_LimitSpace/tmp.junk'
+        Path(self.junkpath).touch()
+
+
     def on_ticker(self):
-        self.ticks += 1
         trg = self.ticker.recv_pyobj()              # Receive time (as float)
-        now = time.time() 
+        self.ticks += 1
         self.logger.info('Tick %d' % self.size)
-        self.waste()
-        
+        with open(self.junkpath,'ab') as f:
+            f.write(bytearray(1000000))
+
     def handleSpcLimit(self):
         # Ignore double callbacks
         if self.ticks > 1:
             self.logger.info('Limit %d' % self.size)
-            remove(self.name)
             self.size = self.delta
             self.ticks = 0
-   
+            remove(self.junkpath)
+            Path(self.junkpath).touch()
+
     def __destroy__(self):
-        remove(self.name)
+        remove(self.junkpath)
         self.logger.info("Stopping SpcLimit %d" % self.id)
+        self.logger.flush()
+        self.logger.close()
