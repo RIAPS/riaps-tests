@@ -7,6 +7,7 @@ import paramiko
 import zmq
 import time
 import threading
+import datetime
 
 stream = open('riaps_testing_config.yml', 'r')
 config = yaml.load(stream, Loader=yaml.SafeLoader)
@@ -145,6 +146,8 @@ def runTest(name, folder, riaps, depl, startupTime=60, runTime=60, cleanupTime=1
         for thread in threadPool:
             thread.start()
 
+    start_time = datetime.datetime.now()
+
     # Launch riaps_ctrl
     assert os.system("riaps_ctrl test.rc") == 0, "Error while running riaps_ctrl"
 
@@ -161,12 +164,21 @@ def runTest(name, folder, riaps, depl, startupTime=60, runTime=60, cleanupTime=1
         try:
             # Find all log files on the target host
             client.connect(host, username=config['username'], password=config['password'])
+
+            # Collect journalctl logs
+            since = start_time.strftime('%Y-%m-%d %H:%M:%S')
+            stdin, stdout, stderr = client.exec_command("sudo journalctl -u riaps-deplo --since '%s'" % since)
+            print('\nJournalctl from %s' % host)
+            for line in stdout:
+                print(line.strip('\n'))
+            
+            # Collect client logs
             stdin, stdout, stderr = client.exec_command("ls %s" % os.path.join(config['logPath'], config['logPrefix']))
             for line in stderr:
                 print(line.strip('\n'))
             for logfile in stdout:
                 logfile = logfile.strip('\n')
-                print("Found logfile on %s named %s" % (host, logfile))
+                print("\nFound logfile on %s named %s" % (host, logfile))
                 stdin2, stdout2, stderr2 = client.exec_command("cat %s" % os.path.join(config['logPath'], logfile))
                 log = []
                 for line in stdout2:

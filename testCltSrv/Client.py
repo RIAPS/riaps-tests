@@ -4,6 +4,7 @@ from riaps.run.exc import PortError
 import os
 import logging
 import random
+import spdlog as spd
 
 class Client(Component):
     def __init__(self, logfile):
@@ -16,11 +17,9 @@ class Client(Component):
         except OSError:
             pass
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.connected = False
         self.pending = 0
@@ -29,7 +28,7 @@ class Client(Component):
 
     def on_clock(self):
         now = self.clock.recv_pyobj()   # Receive time.time() as float
-        self.logger.info('on_clock(): %s',str(now))
+        self.logger.info('on_clock(): %s' % str(now))
         if self.pending == 0:
             msg = (self.id, random.randint(0,10000))
             try:
@@ -49,3 +48,4 @@ class Client(Component):
 
     def __destroy__(self):
         self.logger.info("Stopping Client %d" % self.id)
+        self.logger.flush()

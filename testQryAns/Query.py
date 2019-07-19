@@ -3,6 +3,7 @@ from riaps.run.comp import Component
 import os
 import logging
 import random
+import spdlog as spd
 
 class Query(Component):
     def __init__(self, logfile):
@@ -15,17 +16,15 @@ class Query(Component):
         except OSError:
             pass
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompQry %d" % self.id)
 
     def on_clock(self):
         now = self.clock.recv_pyobj()   # Receive time.time() as float
-        self.logger.info('on_clock(): %s',str(now))
+        self.logger.info('on_clock(): %s' % str(now))
         msg = (self.id,random.randint(0,10000))
         self.logger.info('Query %d %d' % msg)
         self.cltQryPort.send_pyobj(msg)
@@ -36,3 +35,4 @@ class Query(Component):
 
     def __destroy__(self):
         self.logger.info("Stopping CompQry %d" % self.id)
+        self.logger.flush()

@@ -3,6 +3,7 @@ from riaps.run.comp import Component
 import logging
 import random
 import os
+import spdlog as spd
 
 class CompTimerPer(Component):
     def __init__(self, logfile):
@@ -17,11 +18,9 @@ class CompTimerPer(Component):
             pass
 
 
-        self.fh = logging.FileHandler(logpath)
-        self.fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter("%(message)s")
-        self.fh.setFormatter(formatter)
-        self.logger.addHandler(self.fh)
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompTimerPer %d" % self.id)
 
@@ -32,7 +31,7 @@ class CompTimerPer(Component):
         now = self.periodic.recv_pyobj()                # Receive time (as float)
         self.ticker.send_pyobj(now)
         per = self.periodic.getPeriod()
-        self.logger.info('Periodic %s %s',now,per)
+        self.logger.info('Periodic %s %s' % (now,per))
         self.messageCounter += 1
         if self.messageCounter >= 10:
             # self.logger.info('Setting period...')
@@ -51,3 +50,4 @@ class CompTimerPer(Component):
 
     def __destroy__(self):
         self.logger.info('Stopping...')
+        self.logger.flush()
