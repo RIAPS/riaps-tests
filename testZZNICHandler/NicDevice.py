@@ -58,7 +58,7 @@ class NicDevice(Component):
     def __destroy__(self):
         try:
             res = subprocess.call("ifconfig eth0 up",shell=True)
-            self.logger.info("%s RESULT: %s" % (msg,str(res)))
+            self.logger.info("RESULT: %s" % str(res))
         except Exception as e:
             self.logger.error(str(e))
         self.logger.info("Stopping NicDevice %d" % self.id)
