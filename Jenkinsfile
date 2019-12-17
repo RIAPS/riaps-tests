@@ -20,6 +20,7 @@ pipeline {
   post {
     always {
         junit allowEmptyResults: false, keepLongStdio: true, testResults: 'results.xml'
+        sh 'riaps_fab sys.reboot'
     }
   }
 }
