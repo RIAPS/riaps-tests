@@ -1,3 +1,0 @@
-app NAME {
-  on (HOST) ActorA;
-}
