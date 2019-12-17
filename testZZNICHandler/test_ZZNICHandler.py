@@ -35,5 +35,5 @@ def verifyResults(results):
     assert numNICcalls > 0, "NIC Handler not called!"
 
 
-def test_NICHandler():
-    verifyResults(runTest("TestNICHandler", "testNICHandler", "nic.riaps", "nic.depl"))
+def test_ZZNICHandler():
+    verifyResults(runTest("TestZZNICHandler", "testZZNICHandler", "nic.riaps", "nic.depl"))
