@@ -5,6 +5,7 @@ import spdlog as spd
 import random
 import threading
 import logging
+from riaps.run.exc import PortError
 
 class CompReq(Component):
     def __init__(self, logfile):
