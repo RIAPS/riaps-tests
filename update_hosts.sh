@@ -40,8 +40,8 @@ git -C riaps-pycom checkout 6c21a2ee3e267ba3be8866acfeaed3d44cf1565a
 
 # Fetch deb packages being tested
 source version.sh
-fetch riaps-core $coreversion riaps-core-armhf.deb
-fetch riaps-core $coreversion riaps-core-amd64.deb
+#fetch riaps-core $coreversion riaps-core-armhf.deb
+#fetch riaps-core $coreversion riaps-core-amd64.deb
 fetch riaps-pycom $pycomversion riaps-pycom-armhf.deb
 fetch riaps-pycom $pycomversion riaps-pycom-amd64.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-armhf.deb
