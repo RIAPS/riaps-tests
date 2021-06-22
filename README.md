@@ -30,5 +30,3 @@ Keywords
 NAME: The name of the running application. This allows files to be reused across multiple tests.
 HOST: A hostname on which to run an application actor. Each instance of the keyword will be replaced with a unique host.
 ```
-
-Test changes
