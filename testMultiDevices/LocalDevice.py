@@ -15,9 +15,9 @@ class LocalDeviceThread(threading.Thread):
     '''
     Inner LocalDevice thread
     '''
-    def __init__(self,trigger,logger):
+    def __init__(self,trigger,loggerName):
         threading.Thread.__init__(self)
-        self.logger = logger
+        self.logger = spd.get(loggerName)
         self.active = threading.Event()
         self.active.clear()
         self.waiting = threading.Event()
@@ -88,7 +88,8 @@ class LocalDevice(Component):
         except OSError:
             pass
 
-        self.logger = spd.FileLogger('%s_%d' % (self.logfile, self.pid), logpath)
+        self.loggerName = f"{self.logfile}_{self.pid}"
+        self.logger = spd.FileLogger(self.loggerName, logpath)
         self.logger.set_level(spd.LogLevel.DEBUG)
         self.logger.set_pattern('%v')
 
@@ -108,7 +109,7 @@ class LocalDevice(Component):
     # riaps:keep_clock:begin
     def on_clock(self):
         if self.LocalDeviceThread == None: # First clock pulse
-            self.LocalDeviceThread = LocalDeviceThread(self.trigger,self.logger) # Inside port, external zmq port
+            self.LocalDeviceThread = LocalDeviceThread(self.trigger,self.loggerName) # Inside port, external zmq port
             self.LocalDeviceThread.start() # Start thread
             self.trigger.set_identity(self.LocalDeviceThread.get_identity(self.trigger))
             self.trigger.activate()
