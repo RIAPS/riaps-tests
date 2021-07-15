@@ -3,12 +3,12 @@
 import riaps_testing
 
 def verifyResults(results, numDevices):
-     """Verify that test results match the expected behavior of a device using
-        the Qry Ans model with an inside port within the device component
+    """Verify that test results match the expected behavior of a device using
+       the Qry Ans model with an inside port within the device component
 
-     Args:
-         results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
-         numDevices  (int): The number of expected device actors
+    Args:
+        results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
+        numDevices  (int): The number of expected device actors
 
     """
     qryCount = 0
