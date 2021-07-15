@@ -9,9 +9,8 @@ def verifyResults(results, numDevices):
      Args:
          results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
          numDevices  (int): The number of expected device actors
+
     """
-    results = riaps_testing.runTest("test_multiDevices", "testMultiDevices", "multiDevices.riaps", "multiDevices.depl")
-    assert len(results) != 0, "Failed to retrieve any logs!"
     qryCount = 0
     for key in results:
         assert results[key][0].find("Starting") != -1, "First line of %s isn't starting!" % key
