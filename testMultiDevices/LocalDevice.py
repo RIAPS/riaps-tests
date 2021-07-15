@@ -127,11 +127,11 @@ class LocalDevice(Component):
     # riaps:keep_deconstr:begin
     def __destroy__(self):
         self.logger.info("__destroy__")
-        self.logger.flush()
         self.LocalDeviceThread.deactivate()
         self.LocalDeviceThread.terminate()
         self.LocalDeviceThread.join()
         self.logger.info("LocalDevice on %d - __destroy__ed" % self.pid)
+        self.logger.flush()
     # riaps:keep_deconstr:end
 
     # riaps:keep_impl:begin
