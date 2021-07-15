@@ -35,3 +35,7 @@ class LocalDeviceManager(Component):
         requestMsg = (self.pid, self.requestCounter)
         self.logger.info("Query: %d %d" % requestMsg)
         self.device_port.send_pyobj(requestMsg)       # Send request to device periodically
+
+    def __destroy__(self):
+        self.logger.info("Stopping LocalDeviceManager %d" % self.pid)
+        self.logger.flush()

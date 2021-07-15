@@ -127,6 +127,7 @@ class LocalDevice(Component):
     # riaps:keep_deconstr:begin
     def __destroy__(self):
         self.logger.info("__destroy__")
+        self.logger.flush()
         self.LocalDeviceThread.deactivate()
         self.LocalDeviceThread.terminate()
         self.LocalDeviceThread.join()
