@@ -1,9 +1,7 @@
 app multiDevices {
 
 
-    on (10.1.1.52) DeviceActor(name="riaps-d521");
-    on (10.1.1.196) DeviceActor(name="riaps-eb18");
-    on (10.1.1.44) DeviceActor(name="riaps-2839");
-    on (10.1.1.201) DeviceActor(name="riaps-5df2");
-    on (10.1.1.205) DeviceActor(name="riaps-1d35");
+    on (HOST) DeviceActor();
+    on (HOST) DeviceActor();
+    on (HOST) DeviceActor();
 }

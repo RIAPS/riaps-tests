@@ -6,6 +6,8 @@ import struct
 import threading
 import time
 import zmq
+import spdlog as spd
+import random
 # riaps:keep_import:end
 
 
@@ -24,7 +26,8 @@ class LocalDeviceThread(threading.Thread):
         self.trigger = trigger               # inside RIAPS port
         self.plug = None
         self.plug_identity = None
-        self.logger.info("LocalDeviceThread _init()_ed")
+        self.id = random.randint(0,10000)
+        self.logger.info("LocalDeviceThread - _init()_ed")
 
     def get_identity(self,ins_port):
         if self.plug_identity is None:
@@ -35,8 +38,11 @@ class LocalDeviceThread(threading.Thread):
                 time.sleep(0.1)
         return self.plug_identity
 
+    def isPlugReady(self):
+        return self.active.is_set()
+
     def run(self):
-        self.logger.info("LocalDeviceThread - starting")
+        self.logger.info("Starting LocalDeviceThread")
         self.plug = self.trigger.setupPlug(self)     # Ask RIAPS port to make a plug (zmq socket) for this end
         self.poller = zmq.Poller()                   # Set up poller to wait for messages from either side
         self.poller.register(self.plug, zmq.POLLIN)  # plug socket (connects to trigger port of parent device comp)
@@ -50,33 +56,43 @@ class LocalDeviceThread(threading.Thread):
                 if self.terminated.is_set(): break
                 if self.plug in socks and socks[self.plug] == zmq.POLLIN:    # Input from the plug
                     message = self.plug.recv_pyobj()
-                    self.logger.info("Plug message received: %s" % message)
-                    messageNum = message[-1]
-                    responseMsg = ("Device Response: %s" % messageNum)
-                    self.logger.info("Plug message response: %s" % responseMsg)
+                    self.logger.info("LocalDeviceThread - Plug message received: %d %d" % (message[0],message[1]))
+                    responseMsg = (self.id,message[0],message[1])
+                    self.logger.info("LocalDeviceThread - Plug message response: %d %d %d" % responseMsg)
                     self.plug.send_pyobj(responseMsg)                        # Send response back to the LocalDevice
-        self.logger.info("LocalDeviceThread - ended")
-
+        self.logger.info("Ended LocalDeviceThread")
 
     def activate(self):
         self.active.set()
-        self.logger.info("LocalDeviceThread - activated")
+        self.logger.info("Activated LocalDeviceThread")
 
     def deactivate(self):
         self.active.clear()
-        self.logger.info("LocalDeviceThread - deactivated")
+        self.logger.info("Deactivated LocalDeviceThread")
 
     def terminate(self):
         self.active.set()
         self.terminated.set()
-        self.logger.info("LocalDeviceThread - terminating")
+        self.logger.info("Terminating LocalDeviceThread")
 
 class LocalDevice(Component):
     # riaps:keep_constr:begin
     def __init__(self):
         super(LocalDevice, self).__init__()
         self.pid = os.getpid()
-        self.logger.info("LocalDevice - starting")
+
+        self.logfile = "localDevice"
+        logpath = '/tmp/riaps_%s_%d.log' % (self.logfile, self.pid)
+        try:
+            os.remove(logpath)
+        except OSError:
+            pass
+
+        self.logger = spd.FileLogger('%s_%d' % (self.logfile, self.pid), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
+
+        self.logger.info("Starting LocalDevice %d" % self.pid)
         self.LocalDeviceThread = None  # Cannot manipulate ports in constructor or start threads, use clock pulse
     # riaps:keep_constr:end
 
@@ -84,8 +100,9 @@ class LocalDevice(Component):
     def on_device_port(self):
         # receive
         msg = self.device_port.recv_pyobj()    # required to remove message from queue
-        self.logger.info('on_device_port(): %s' % msg)
-        self.trigger.send_pyobj(msg)
+        if (self.LocalDeviceThread.isPlugReady()):
+            self.logger.info("LocalDevice on %d - Device Query Received: %s" % (self.pid, msg))
+            self.trigger.send_pyobj(msg)
     # riaps:keep_device_port:end
 
     # riaps:keep_clock:begin
@@ -102,8 +119,9 @@ class LocalDevice(Component):
     # riaps:keep_trigger:begin
     def on_trigger(self):                       # Internally triggered operation (
         msg = self.trigger.recv_pyobj()         # Receive message from internal thread
-        self.logger.info("LocalDevice - on_trigger(): %s" % msg)
-        self.device_port.send_pyobj(msg)               # Send answer back from original query
+        self.logger.info("LocalDevice on %d - Device Trigger Recv: %s" % (self.pid, msg))
+        ansMsg = (self.pid, msg[1], msg[2])
+        self.device_port.send_pyobj(ansMsg)        # Send answer back from original query
     # riaps:keep_trigger:end
 
     # riaps:keep_deconstr:begin
@@ -112,7 +130,7 @@ class LocalDevice(Component):
         self.LocalDeviceThread.deactivate()
         self.LocalDeviceThread.terminate()
         self.LocalDeviceThread.join()
-        self.logger.info("LocalDevice - __destroy__ed")
+        self.logger.info("LocalDevice on %d - __destroy__ed" % self.pid)
     # riaps:keep_deconstr:end
 
     # riaps:keep_impl:begin

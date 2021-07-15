@@ -10,17 +10,17 @@ app multiDevices{
     ans device_port: (DeviceQry, DeviceAns) timed;
   }
 
-  component LocalDeviceManager(name){
+  component LocalDeviceManager(){
     timer clock 10 sec;
     qry device_port: (DeviceQry, DeviceAns) timed;
   }
 
 
-  actor DeviceActor(name){
+  actor DeviceActor(){
     internal DeviceQry, DeviceAns;
     {
       localDev : LocalDevice();
-      localMgr : LocalDeviceManager(name=name);
+      localMgr : LocalDeviceManager();
     }
   }
 

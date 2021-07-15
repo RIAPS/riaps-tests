@@ -4,21 +4,34 @@ from riaps.run.comp import Component
 import logging
 import time
 import os
+import spdlog as spd
 
 class LocalDeviceManager(Component):
-    def __init__(self, name):
+    def __init__(self):
         super(LocalDeviceManager, self).__init__()
-        self.name = name
-        self.logger.info("LocalDeviceManager - starting")
+        self.pid = os.getpid()
+
+        self.logfile = "localDeviceMgr"
+        logpath = '/tmp/riaps_%s_%d.log' % (self.logfile, self.pid)
+        try:
+            os.remove(logpath)
+        except OSError:
+            pass
+
+        self.logger = spd.FileLogger('%s_%d' % (self.logfile, self.pid), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
+
+        self.logger.info("Starting LocalDeviceManager %d" % self.pid)
         self.requestCounter = 0
 
     def on_device_port(self):
         msg = self.device_port.recv_pyobj()    # Receive string
-        self.logger.info("Device Response for %s: %s" % (self.name, msg))
+        self.logger.info("Recv: %d %d %d" % (msg[0], msg[1], msg[2]))
 
     def on_clock(self):
         msg = self.clock.recv_pyobj()      # Receive timestamp
         self.requestCounter += 1
-        requestMsg = ("LocalDeviceManager on %s - Device Request: %d" % (self.name, self.requestCounter))
-        self.logger.info("on_clock(): %s" % requestMsg)
+        requestMsg = (self.pid, self.requestCounter)
+        self.logger.info("Query: %d %d" % requestMsg)
         self.device_port.send_pyobj(requestMsg)       # Send request to device periodically
