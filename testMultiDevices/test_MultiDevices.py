@@ -2,8 +2,13 @@
 """
 import riaps_testing
 
-def test_multiDevices():
-    """Test RIAPS Multiple Devices communication using answer/query
+def verifyResults(results, numDevices):
+     """Verify that test results match the expected behavior of a device using
+        the Qry Ans model with an inside port within the device component
+
+     Args:
+         results (dictionary): A dictionary in the format provided by riaps_testing.runTest(...)
+         numDevices  (int): The number of expected device actors
     """
     results = riaps_testing.runTest("test_multiDevices", "testMultiDevices", "multiDevices.riaps", "multiDevices.depl")
     assert len(results) != 0, "Failed to retrieve any logs!"
@@ -31,7 +36,7 @@ def test_multiDevices():
                     ansCount += 1
             assert ansCount != 0, "Didn't receive any answers!"
 
-    assert qryCount == numQry, "Found incorrect number of query responses from the devices: Expected %d, found %d" % (numQry, qryCount)
+    assert qryCount == numDevices, "Found incorrect number of devices responsed: Expected %d, found %d" % (numDevices, qryCount)
 
 def runTest(name, depl, numDevices):
     """Run a Multiple Devices test
@@ -41,9 +46,9 @@ def runTest(name, depl, numDevices):
         validation with verifyResults(...)
 
     Args:
-        name   (str): The name of the application
-        depl   (str): The name of the deployment(.depl) file to be tested
-        numQry (int): The number of clients expected to be created by the deployment
+        name       (str): The name of the application
+        depl       (str): The name of the deployment(.depl) file to be tested
+        numDevices (int): The number of devices expected to be created by the deployment
 
     """
     verifyResults(riaps_testing.runTest(name, "testMultiDevices", "multiDevices.riaps", depl), numDevices)
