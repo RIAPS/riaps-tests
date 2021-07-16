@@ -15,9 +15,9 @@ class LocalDeviceThread(threading.Thread):
     '''
     Inner LocalDevice thread
     '''
-    def __init__(self,trigger,loggerName):
+    def __init__(self,trigger,logger):
         threading.Thread.__init__(self)
-        self.logger = spd.get(loggerName)
+        self.logger = logger
         self.active = threading.Event()
         self.active.clear()
         self.waiting = threading.Event()
@@ -81,17 +81,17 @@ class LocalDevice(Component):
         super(LocalDevice, self).__init__()
         self.pid = os.getpid()
 
-        self.logfile = "localDevice"
-        logpath = '/tmp/riaps_%s_%d.log' % (self.logfile, self.pid)
-        try:
-            os.remove(logpath)
-        except OSError:
-            pass
+        #self.logfile = "localDevice"
+        #logpath = '/tmp/riaps_%s_%d.log' % (self.logfile, self.pid)
+        #try:
+        #    os.remove(logpath)
+        #except OSError:
+        #    pass
 
-        self.loggerName = f"{self.logfile}_{self.pid}"
-        self.logger = spd.FileLogger(self.loggerName, logpath)
-        self.logger.set_level(spd.LogLevel.DEBUG)
-        self.logger.set_pattern('%v')
+        #self.loggerName = f"{self.logfile}_{self.pid}"
+        #self.logger = spd.FileLogger(self.loggerName, logpath)
+        #self.logger.set_level(spd.LogLevel.DEBUG)
+        #self.logger.set_pattern('%v')
 
         self.logger.info("Starting LocalDevice %d" % self.pid)
         self.LocalDeviceThread = None  # Cannot manipulate ports in constructor or start threads, use clock pulse
@@ -109,7 +109,7 @@ class LocalDevice(Component):
     # riaps:keep_clock:begin
     def on_clock(self):
         if self.LocalDeviceThread == None: # First clock pulse
-            self.LocalDeviceThread = LocalDeviceThread(self.trigger,self.loggerName) # Inside port, external zmq port
+            self.LocalDeviceThread = LocalDeviceThread(self.trigger,self.logger) # Inside port, external zmq port
             self.LocalDeviceThread.start() # Start thread
             self.trigger.set_identity(self.LocalDeviceThread.get_identity(self.trigger))
             self.trigger.activate()
