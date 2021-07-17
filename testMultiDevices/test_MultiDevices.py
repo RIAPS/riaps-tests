@@ -15,7 +15,7 @@ def verifyResults(results, numDevices):
     for key in results:
         assert results[key][0].find("Starting") != -1, "First line of %s isn't starting!" % key
         assert results[key][-1].find("Stopping") != -1, "Last line of %s isn't stopping!" % key
-        if key.find("Query") != -1:
+        if key.find("localDeviceMgr") != -1:
             qryCount += 1
             qryID = 0
             queryNum = -1
