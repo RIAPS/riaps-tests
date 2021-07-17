@@ -27,13 +27,13 @@ class LocalDeviceManager(Component):
 
     def on_device_port(self):
         msg = self.device_port.recv_pyobj()    # Receive string
-        self.logger.info("Recv: %d %d %d" % (msg[0], msg[1], msg[2]))
+        self.logger.info("Recv %d %d %d" % (msg[0], msg[1], msg[2]))
 
     def on_clock(self):
         msg = self.clock.recv_pyobj()      # Receive timestamp
         self.requestCounter += 1
         requestMsg = (self.pid, self.requestCounter)
-        self.logger.info("Query: %d %d" % requestMsg)
+        self.logger.info("Query %d %d" % requestMsg)
         self.device_port.send_pyobj(requestMsg)       # Send request to device periodically
 
     def __destroy__(self):
