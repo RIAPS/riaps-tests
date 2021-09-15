@@ -12,7 +12,7 @@ pipeline {
     stage('Test') {
       steps {
         sh '''#!/bin/bash
-          RIAPSHOME=/usr/local/riaps pytest -x --junitxml=results.xml
+          RIAPSHOME=/usr/local/riaps pytest --maxfail=4 --junitxml=results.xml
         '''
       }
     }
