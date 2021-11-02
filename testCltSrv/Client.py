@@ -47,12 +47,12 @@ class Client(Component):
             try:
                 rep = self.cltReqPort.recv_pyobj()
                 self.logger.info('Rep %d %d %d' % rep)
-        except PortError:
-            # The first message sent is probably lost, and thus the above read failed
-            self.logger.info('Failed (PortError)')
-        finally:
-            # In either case we decrement the number of pending messages
-            self.pending -= 1
+            except PortError:
+                # The first message sent is probably lost, and thus the above read failed
+                self.logger.info('Failed (PortError)')
+            finally:
+                # In either case we decrement the number of pending messages
+                self.pending -= 1
 
     def __destroy__(self):
         self.logger.info("Stopping Client %d" % self.id)
