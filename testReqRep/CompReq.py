@@ -31,14 +31,20 @@ class CompReq(Component):
     def on_clock(self):
         now = self.clock.recv_pyobj()
         self.logger.info("on_clock(): %s %s" % (now,self.actorName))
+
+        # Check if the our 'request' port is connected, if not, return
+        if self.reqPort.connected() == 0:
+            self.logger.info('Not yet connected!')
+            return
+
         if self.lock.acquire(blocking=False):
             msg = (self.id,self.messageCounter)
             try:
-                self.logger.info("Request %d %s" % msg)
                 self.reqPort.send_pyobj(msg)
+                self.logger.info("Request %d %s" % msg)
                 self.messageCounter += 1
             except PortError:
-                self.logger.info("REQ port error")
+                self.logger.info('Not yet connected!')
                 self.lock.release()
                 self.reqPort.reset()
 
