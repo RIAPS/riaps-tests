@@ -30,6 +30,10 @@ class Client(Component):
         now = self.clock.recv_pyobj()   # Receive time.time() as float
         self.logger.info('on_clock(): %s' % str(now))
 
+        if self.cltReqPort.connected() == 0:
+            self.logger.info('Not yet connected!')
+            return
+
         if self.pending == 0:
             msg = (self.id, random.randint(0,10000))
             try:
