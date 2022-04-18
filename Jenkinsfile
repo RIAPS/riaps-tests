@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_OAUTH_TOKEN')]) {
+        withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
           sh 'more update_hosts.sh'
           //sh 'chmod +x update_hosts.sh && ./update_hosts.sh'
         }
@@ -12,7 +12,7 @@ pipeline {
     stage('Test') {
       steps {
         sh '''#!/bin/bash
-          RIAPSHOME=/usr/local/riaps pytest -x --junitxml=results.xml
+          RIAPSHOME=/usr/local/riaps pytest --maxfail=4 --junitxml=results.xml
         '''
       }
     }

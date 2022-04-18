@@ -29,6 +29,11 @@ class Client(Component):
     def on_clock(self):
         now = self.clock.recv_pyobj()   # Receive time.time() as float
         self.logger.info('on_clock(): %s' % str(now))
+
+        if self.cltReqPort.connected() == 0:
+            self.logger.info('Not yet connected!')
+            return
+
         if self.pending == 0:
             msg = (self.id, random.randint(0,10000))
             try:
@@ -42,9 +47,16 @@ class Client(Component):
                 else:
                     self.logger.info('Not yet connected!')
         else:
-            rep = self.cltReqPort.recv_pyobj()
-            self.pending -= 1
-            self.logger.info('Rep %d %d %d' % rep)
+            # self.pending != 0 implies that we already sent a message -> try to read response
+            try:
+                rep = self.cltReqPort.recv_pyobj()
+                self.logger.info('Rep %d %d %d' % rep)
+            except PortError:
+                # The first message sent is probably lost, and thus the above read failed
+                self.logger.info('Failed (PortError)')
+            finally:
+                # In either case we decrement the number of pending messages
+                self.pending -= 1
 
     def __destroy__(self):
         self.logger.info("Stopping Client %d" % self.id)

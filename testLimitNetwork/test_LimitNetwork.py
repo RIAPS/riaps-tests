@@ -1,5 +1,6 @@
 import riaps_testing
 
+#@xfail(reason="working on it")
 def test_LimitNetwork():
     """Test RIAPS Network limit handler
     """
@@ -23,7 +24,7 @@ def test_LimitNetwork():
                     numLimit += 1
 
         assert numLimit != 0, "Failed to ever hit limit!"
-        
+
         # The ratio should be approximately 6.0 because the limit is 1.2KB/s and
         # the message size is increased by 256MB every second
         ratio = numTick*1.0/numLimit

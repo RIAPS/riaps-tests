@@ -35,13 +35,13 @@ function fetch () {
 }
 
 # Fetch riaps-pycom for the fabfile
-git clone https://$GITHUB_OAUTH_TOKEN@github.com/RIAPS/riaps-pycom.git
+git clone https://$GITHUB_TOKEN@github.com/RIAPS/riaps-pycom.git
 git -C riaps-pycom checkout 6c21a2ee3e267ba3be8866acfeaed3d44cf1565a
 
 # Fetch deb packages being tested
 source version.sh
-fetch riaps-core $coreversion riaps-core-armhf.deb
-fetch riaps-core $coreversion riaps-core-amd64.deb
+#fetch riaps-core $coreversion riaps-core-armhf.deb
+#fetch riaps-core $coreversion riaps-core-amd64.deb
 fetch riaps-pycom $pycomversion riaps-pycom-armhf.deb
 fetch riaps-pycom $pycomversion riaps-pycom-amd64.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-armhf.deb
@@ -49,7 +49,7 @@ fetch riaps-timesync $timesyncversion riaps-timesync-amd64.deb
 
 # Install deb packages to localhost and BBBs
 fab -f riaps-pycom/bin/fabfile -H 127.0.0.1 riaps.install
-fab -f riaps-pycom/bin/fabfile -H $(python3 read_hosts.py) riaps.kill riaps.install deplo.start
+fab -f riaps-pycom/bin/fabfile -H $(python3 read_hosts.py) deplo.stop riaps.kill riaps.install deplo.start
 
 # Update riaps.conf to correct NIC name
 sudo sed -i "s/eth0/$NIC_NAME/g" /etc/riaps/riaps.conf

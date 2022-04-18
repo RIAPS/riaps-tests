@@ -1,0 +1,27 @@
+app multiDevices{
+
+  message DeviceQry;
+  message DeviceAns;
+
+
+  device LocalDevice(){
+    timer clock 1000;
+    inside trigger /* default */; 	// Inside port for triggering message coming from an internal thread.
+    ans device_port: (DeviceQry, DeviceAns) timed;
+  }
+
+  component LocalDeviceManager(){
+    timer clock 10 sec;
+    qry device_port: (DeviceQry, DeviceAns) timed;
+  }
+
+
+  actor DeviceActor(){
+    internal DeviceQry, DeviceAns;
+    {
+      localDev : LocalDevice();
+      localMgr : LocalDeviceManager();
+    }
+  }
+
+}

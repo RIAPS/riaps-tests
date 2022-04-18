@@ -1,0 +1,7 @@
+app multiDevices {
+
+
+    on (HOST) DeviceActor();
+    on (HOST) DeviceActor();
+    on (HOST) DeviceActor();
+}
