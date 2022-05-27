@@ -36,6 +36,7 @@ class CompTimerSpor(Component):
         # self.logger.info('Got ticker')
         self.sporadic.setDelay(4.0)
         delay1 = self.sporadic.getDelay()
+        self.sporadic.launch()
         self.sporadic.setDelay(0.5)
         delay2 = self.sporadic.getDelay()
         self.sporadic.cancel()
