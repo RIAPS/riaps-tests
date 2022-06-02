@@ -1,0 +1,33 @@
+digraph NAME {
+nodesep="0.1";
+orientation=l;
+rankdir=TB;
+ranksep="1.5";
+subgraph msgs {
+rank=min;
+}
+
+periodic_CompTimerPer_9 -> Tick_10;
+Starter_11 -> periodic_CompTimerPer_9;
+sporadic_CompTimerSpor_12 -> Starter_11;
+Tick_10 -> sporadic_CompTimerSpor_12;
+subgraph cluster_all {
+label=all;
+rank=max;
+rankdir=BT;
+subgraph all_msgs_7 {
+rank=min;
+Tick_10 [label=Tick, shape=ellipse];
+Starter_11 [label=Starter, shape=ellipse];
+}
+
+subgraph cluster_TimerActor_8 {
+label=TimerActor;
+style=rounded;
+periodic_CompTimerPer_9 [label="periodic:CompTimerPer", rank=max, shape=component];
+sporadic_CompTimerSpor_12 [label="sporadic:CompTimerSpor", rank=max, shape=component];
+}
+
+}
+
+}

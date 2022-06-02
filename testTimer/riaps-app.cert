@@ -1,0 +1,8 @@
+#   ****  Generated on 2022-06-01 19:19:40.961605 by pyzmq  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+
+metadata
+curve
+    public-key = "9jcRe1kF<noK*=+e]C3:HNa:NS:HL<WhYZI:ZNs}"
+    secret-key = "vH6x8]0nFHLOWnR/7u@motdkTO!P^F&}sHj.&ADR"

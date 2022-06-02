@@ -1,0 +1,9 @@
+!!python/object:riaps.utils.appdesc.AppDescriptor
+home: /home/riaps/riaps-tests/testTimer
+host: '2168154532'
+hosts:
+- 129.59.105.164
+mac: 080027e99b31
+network: {}
+sha: 080027e99b31
+url: file:////home/riaps/riaps-tests/testTimer
