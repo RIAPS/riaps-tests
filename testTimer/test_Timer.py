@@ -51,10 +51,10 @@ def test_Timer():
                     # if sporadicTimerCounter < 12:
                     assert parts[1] == '0.5', "getDelay() returned wrong value (%d) or setDelay() failed" % int(parts[2])
                     assert parts[2] == '4.0', "getDelay() returned wrong value (%d) or setDelay() failed" % int(parts[2])
-                    assert float(parts[3]) <= 4.0, "sporadic timer launch() failed"
+                    assert abs(float(parts[3]) - 4.0) < 0.5, "sporadic timer launch() call failed or ignored"
                 elif line.find("Sporadic") != -1:
                     parts = line.split(" ")
-                    assert abs(float(parts[2]) - 4.0) < 0.5, "sporadic timer cancel() failed"
+                    assert abs(float(parts[2]) - 4.0) < 0.5, "sporadic timer cancel() call failed or ignored"
                 elif line.find("Halt"):
                     timerRunning = False
                 elif line.find("Launch"):

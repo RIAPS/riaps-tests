@@ -20,9 +20,9 @@ class CompTimerSpor(Component):
         except OSError:
             pass
 
-        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
-        self.logger.set_level(spd.LogLevel.DEBUG)
-        self.logger.set_pattern('%v')
+#         self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+#         self.logger.set_level(spd.LogLevel.DEBUG)
+#         self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompTimerSpor %d" % self.id)
 
@@ -45,7 +45,7 @@ class CompTimerSpor(Component):
         delay1 = self.sporadic.getDelay()
         self.sporadic.setDelay(4.0)
         delay2 = self.sporadic.getDelay()
-        if self.messagecounter > 12:
+        if self.messagecounter > 13:
             self.sporadic.halt()
             self.logger.info('Halt')
         else:
