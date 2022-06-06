@@ -45,7 +45,7 @@ class CompTimerSpor(Component):
         delay1 = self.sporadic.getDelay()
         self.sporadic.setDelay(4.0)
         delay2 = self.sporadic.getDelay()
-        if self.messagecounter >= 12:
+        if self.messagecounter > 12:
             self.sporadic.halt()
             self.logger.info('Halt')
         else:
