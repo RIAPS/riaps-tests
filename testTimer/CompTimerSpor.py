@@ -20,9 +20,9 @@ class CompTimerSpor(Component):
         except OSError:
             pass
 
-#         self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
-#         self.logger.set_level(spd.LogLevel.DEBUG)
-#         self.logger.set_pattern('%v')
+        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        self.logger.set_level(spd.LogLevel.DEBUG)
+        self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompTimerSpor %d" % self.id)
 
