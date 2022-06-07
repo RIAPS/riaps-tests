@@ -18,9 +18,9 @@ class CompTimerPer(Component):
             pass
 
 
-        self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
-        self.logger.set_level(spd.LogLevel.DEBUG)
-        self.logger.set_pattern('%v')
+        # self.logger = spd.FileLogger('%s_%d' % (logfile, self.id), logpath)
+        # self.logger.set_level(spd.LogLevel.DEBUG)
+        # self.logger.set_pattern('%v')
 
         self.logger.info("Starting CompTimerPer %d" % self.id)
 
@@ -43,8 +43,9 @@ class CompTimerPer(Component):
 
     def on_restart(self):
         msg = self.restart.recv_pyobj()
-        self.periodic.launch()
-        self.logger.info('Launch')
+        if not self.periodic.running(): 
+            self.periodic.launch()
+            self.logger.info('Launch')
 
 
 
