@@ -1,4 +1,4 @@
-app NAME {
+app Timer {
 	message Tick;
   message	Starter;
 
