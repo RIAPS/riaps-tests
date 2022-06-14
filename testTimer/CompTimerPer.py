@@ -33,7 +33,7 @@ class CompTimerPer(Component):
         per = self.periodic.getPeriod()
         self.logger.info('Periodic %s %s' % (now,per))
         self.messageCounter += 1
-        if self.messageCounter >= 10:
+        if self.messageCounter >= 9:
             # self.logger.info('Setting period...')
             self.periodic.setPeriod(5.0)
             if self.messageCounter >= 12:
@@ -43,8 +43,9 @@ class CompTimerPer(Component):
 
     def on_restart(self):
         msg = self.restart.recv_pyobj()
-        self.periodic.launch()
-        self.logger.info('Launch')
+        if not self.periodic.running(): 
+            self.periodic.launch()
+            self.logger.info('Launch')
 
 
 
