@@ -1,0 +1,4 @@
+app testHandlePeerStateChange {
+    on (10.0.0.247) NodeB(config = "config/gpio_bbb.yaml");
+    on (10.0.0.249) NodeA();
+}

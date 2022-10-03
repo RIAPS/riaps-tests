@@ -1,0 +1,67 @@
+app testHandlePeerStateChange {
+    message GPIOQry;
+    message GPIOAns;
+    message ShutdownReq;
+    message ShutdownRep;
+    message ShutdownQry;
+    message ShutdownAns;
+
+    message GroupMsg;
+    group TheGroup with leader using GroupMsg;
+
+    library config;
+    library libpy;
+
+    component PowerOnComp() {
+        qry gpio_qry: (GPIOQry, GPIOAns);
+        req shutdown: (ShutdownReq,ShutdownRep);
+        timer clock 1000;
+        
+        //pub HBpub: HB;
+        //sub HBsub: HB;
+        //timer HBtimer 1000;
+    }
+
+    device GPIOInterface(config) {
+    	inside gpio_cmd_port;
+		ans gpio_ans: (GPIOQry, GPIOAns);
+        
+        //pub HBpub: HB;
+        //sub HBsub: HB;
+        //timer HBtimer 1000;
+    }
+
+    component ShutdownInterface() {
+        rep shutdown : (ShutdownReq,ShutdownRep);
+        qry int_shutdown: (ShutdownQry,ShutdownAns);
+        
+        //pub HBpub: HB;
+        //sub HBsub: HB;
+        //timer HBtimer 1000;
+    }
+
+    device ShutdownDevice() {
+        ans int_shutdown : (ShutdownQry,ShutdownAns);
+        timer countdown;
+        
+        //pub HBpub: HB;
+        //sub HBsub: HB;
+        //timer HBtimer 1000;
+    }
+
+    actor NodeB(config) {
+        internal GPIOQry, GPIOAns;
+        {
+            GPIO : GPIOInterface(config=config);
+            main : PowerOnComp();
+        }
+    }
+
+    actor NodeA() {
+        internal ShutdownQry, ShutdownAns;
+        {
+            shutdown_interface : ShutdownInterface();
+            shutdown_device : ShutdownDevice();
+        }
+    }
+}

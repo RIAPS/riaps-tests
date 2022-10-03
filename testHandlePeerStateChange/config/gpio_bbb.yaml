@@ -1,0 +1,32 @@
+---
+##### PinDir: Values #####
+# DIRECTION_AS_IS     : Request the line(s), but don't change current direction.
+# DIRECTION_INPUT     : Request the line(s) for reading the GPIO line state.
+# DIRECTION_OUTPUT    : Request the line(s) for setting the GPIO line state.
+# EVENT_FALLING_EDGE  : Only watch falling edge events.
+# EVENT_RISING_EDGE   : Only watch rising edge events.
+# EVENT_BOTH_EDGES    : Monitor both types of events.
+
+##### PinFlags Values #####
+# FLAG_OPEN_DRAIN  : The line is an open-drain port
+# FLAG_OPEN_SOURCE : The line is an open-source port.
+# FLAG_ACTIVE_LOW  : The active state of the line is low (high is the default).
+
+##### LogicMode #####
+# ACTIVE_HIGH : The RIAPS device should interpret a logic-1 as active, energized, closed
+# ACTIVE_LOW  : The RIAPS device should interpret a logic-0 as active, energized, closed
+
+/dev/gpiochip2: 
+  GroupA:
+    GPIO_67: { PinNum: 3, PinDir: "DIRECTION_OUTPUT", PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+    # R2S: { PinNum: 12, PinDir: "DIRECTION_OUTPUT", PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+    # R3S: { PinNum: 16, PinDir: "DIRECTION_OUTPUT", PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+    # R1I: { PinNum: 21, PinDir: "EVENT_BOTH_EDGES",  PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+    # # action list can only reference pins defined above in the same group
+    # ActionList:
+    #   A: { logic: "R1I",  action: "R1S=ON,R3S=OFF",  signal: RIAPS_IO_CHANGE  }
+    #   B: { logic: "~R1I",  action: "R1S=OFF,R3S=ON",  signal: RIAPS_IO_CHANGE  }
+  # GroupB:
+  #   R3S: { PinNum: 26, PinDir: "DIRECTION_OUTPUT",  PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+  #   R4S: { PinNum: 19, PinDir: "DIRECTION_OUTPUT",  PinFlags: ["FLAG_OPEN_DRAIN",], LogiceMode: "ACTIVE_HIGH"  }
+
