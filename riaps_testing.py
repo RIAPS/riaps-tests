@@ -58,7 +58,7 @@ def powerCycleControl(hostname, events):
         sock.send_pyobj(msg)
         assert sock.recv_pyobj() == 'Powercycle sent', "Powercycle failed for timediff: %d" % timediff
 
-def runTest(name, folder, riaps, depl, startupTime=180, runTime=60, cleanupTime=120, powerTiming=None):
+def runTest(name, folder, riaps, depl, startupTime=90, runTime=60, cleanupTime=90, powerTiming=None):
     """Run a RIAPS application on BBB hosts
 
     Args:
