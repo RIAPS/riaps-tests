@@ -14,11 +14,11 @@ app NAME {
       timer sporadic;
     }
 
-    actor TimerActor(logfile = "TimerActor") {
+    actor TimerActor(logfile1 = "CompTimerPer", logfile2 = "CompTimerSpor") {
 		local Tick, Starter;
       	{
-          periodic: CompTimerPer(logfile = logfile);
-          sporadic: CompTimerSpor(logfile = logfile);
+          periodic: CompTimerPer(logfile = logfile1);
+          sporadic: CompTimerSpor(logfile = logfile2);
        	}
     }
 }

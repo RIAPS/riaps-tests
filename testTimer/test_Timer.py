@@ -10,48 +10,53 @@ def test_Timer():
     print(results)
     assert results != {}, "Logs are empty or not collected!"
     for key in results:
+        assert len(results[key]) > 0, "no log entry captured for %s" % key
         if key.find("CompTimerPer") != -1:
             assert results[key][0].find("Starting") != -1, "First line of %s isn't starting!" % key
             assert results[key][-1].find("Stopping") != -1, "Last line of %s isn't stopping!" % key
-            # cltCount += 1
-            # cltID = 0
-            # request = -1
-            # repCount = 0p
             periodicTimerCounter = 0
             timerRunning = True
             lastTime = 0.0
             currTime = 0.0
             for line in results[key]:
-            #     assert line.find("Failed") == -1, "Client request failed"
                 if line.find("Periodic") != -1:
                     assert timerRunning, "Periodic timer fired while halted!"
                     periodicTimerCounter += 1
-            #         assert request == -1, "Made another request before receiving a reply!"
                     parts = line.split(" ")
                     lastTime = currTime
                     currTime = float(parts[1])
                     if periodicTimerCounter < 10:
-                        assert parts[2] == '1.0', "getPeriod() returned wrong value: %d" % int(parts[2])
+                        assert parts[2] == '1.0', "getPeriod() returned wrong value: %f" % float(parts[2])
                         if periodicTimerCounter > 3:
                             assert abs(currTime - lastTime -1.0) < 0.5, "Timer error greater than 0.5s"
-                    if periodicTimerCounter < 12:
-                        assert parts[2] == '5.0', "getPeriod() returned wrong value(%d) or setPeriod() failed" % int(parts[2])
+                    elif periodicTimerCounter < 12:
+                        assert parts[2] == '5.0', "getPeriod() returned wrong value(%f) or setPeriod() failed" % float(parts[2])
                         if periodicTimerCounter > 10:
                             assert abs(currTime - lastTime - 5.0) < 0.5, "Timer error greater than 0.5s"
-                elif line.find("Halt"):
+                elif line.find("Halt") != -1:
                     timerRunning = False
-                elif line.find("Launch"):
+                elif line.find("Launch") != -1:
                     timerRunning = True
-                               #         cltID = int(parts[1])
-            #         request = int(parts[2])
-            #     elif line.find("Rep") != -1:
-            #         assert request != -1, "Received an unexpected response!"
-            #         parts = line.split(" ")
-            #         assert int(parts[2]) == cltID, "Received a response meant for another node!"
-            #         assert int(parts[3]) == request*2, "Received an invalid response: Expected %d, found %s" % (request*2, parts[3])
-            #         cltID = 0
-            #         request = -1
-            #         repCount += 1
-            # assert repCount != 0, "Didn't receive any responses!"
-
-    # assert cltCount == numClt, "Found incorrect number of clients: Expected %d, found %d" % (numClt, cltCount)
+        elif key.find("CompTimerSpor") != -1:
+            assert results[key][0].find("Starting") != -1, "First line of %s isn't starting!" % key
+            assert results[key][-1].find("Stopping") != -1, "Last line of %s isn't stopping!" % key
+            sporadicTimerCounter = 0
+            timerRunning = True
+            lastTime = 0.0
+            currTime = 0.0
+            for line in results[key]:
+                if line.find("Ticker") != -1:
+                    assert timerRunning, "Sporadic timer fired while halted!"
+                    sporadicTimerCounter += 1
+                    parts = line.split(" ")
+                    assert parts[1] == '0.5', "getDelay() returned wrong value (%f) or setDelay() failed" % float(parts[2])
+                    assert parts[2] == '4.0', "getDelay() returned wrong value (%f) or setDelay() failed" % float(parts[2])
+                    if sporadicTimerCounter < 13:
+                        assert float(parts[3]) <= 4.0 + 0.5, "sporadic timer launch() call failed or ignored"
+                elif line.find("Sporadic") != -1:
+                    parts = line.split(" ")
+                    assert float(parts[2]) > 4 - 0.5, "sporadic timer cancel() call failed or ignored"
+                elif line.find("Halt") != -1:
+                    timerRunning = False
+                elif line.find("Launch") != -1:
+                    timerRunning = True
