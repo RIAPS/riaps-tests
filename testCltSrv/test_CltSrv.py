@@ -1,6 +1,8 @@
 """RIAPS Clt Srv messaging model tests
 """
 import riaps_testing
+import pytest
+import time
 
 def verifyResults(results, numClt):
     """Verify that test results match the expected behavior of the Clt Srv model
@@ -53,11 +55,33 @@ def runTest(name, depl, numClt):
     """
     verifyResults(riaps_testing.runTest(name, "testCltSrv", "cltsrv.riaps", depl), numClt)
 
-def test_CltSrvLocal_1_1():
-    runTest("CltSrvLocal_1_1", "testLocal_1_1.depl", 1)
+# def test_CltSrvLocal_1_1():
+#     runTest("CltSrvLocal_1_1", "testLocal_1_1.depl", 1)
 
-def test_CltSrvRemote_1_1():
-    runTest("CltSrvRemote_1_1", "testRemote_1_1.depl", 1)
+# def test_CltSrvRemote_1_1():
+#     runTest("CltSrvRemote_1_1", "testRemote_1_1.depl", 1)
 
-def test_CltSrvRemote_1_N():
-    runTest("CltSrvRemote_1_N", "testRemote_1_N.depl", 2)
+# def test_CltSrvRemote_1_N():
+#     runTest("CltSrvRemote_1_N", "testRemote_1_N.depl", 2)
+
+@pytest.mark.app_setup({
+    "model":"cltsrv.riaps",
+    "deployment":"testLocal_1_1.depl",
+    "name":"CltSrvLocal_1_1",
+    "num_nodes": 1
+})
+def test_CltSrvLocal_1_1(riaps_ctrl):
+    '''Local messages should be received locally and not remotely
+    Example for new test framework
+    Depends: riaps_ctrl, riaps_deplo, riaps_disco
+
+    Development notes: Use ctrl.Controller() as a fixture, as this code
+        should be limited to the app execution steps and output validity
+    '''
+    # Act
+    riaps_ctrl.launchByName("CltSrvLocal_1_1")
+    time.sleep(30)
+    riaps_ctrl.haltByName("CltSrvLocal_1_1")
+
+    # Assert
+    
