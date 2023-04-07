@@ -130,6 +130,7 @@ def runTest(name, folder, riaps, depl, startupTime=30, runTime=60, cleanupTime=3
     file.write("f %s\n" % folder)
     file.write("m test.riaps\n")
     file.write("d test.depl\n")
+    file.write("i %s\n" % name)
     file.write("l %s\n" % name)
     file.write("w %d\n" % runTime)
     file.write("h %s\n" % name)
