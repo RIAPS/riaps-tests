@@ -1,0 +1,37 @@
+app NAME {
+	message Topic1;
+	message p2pMsg;
+
+	component CompPub() {
+		pub PubPort : Topic1;
+		timer clock 1000;
+	}
+
+	component CompSub() {
+		sub SubPort : Topic1;
+	}
+
+	component P2P(id){
+		timer clock 1000 msec;
+		pub p2p_pub : p2pMsg;
+		sub p2p_sub : p2pMsg;
+	}
+
+	actor Pub_ACTOR() {
+		{
+			Publisher : CompPub();
+		}
+	}
+
+	actor Sub_ACTOR() {
+		{
+			Subscriber : CompSub();
+		}
+	}
+
+	actor P2P_ACTOR(id) {
+		{
+			peer : P2P(id=id);
+		}
+	}
+}
