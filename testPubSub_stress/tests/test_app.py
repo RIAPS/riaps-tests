@@ -1,5 +1,7 @@
+import datetime
 import pathlib
 import pytest
+import queue
 import time
 
 import riaps.test_suite.test_api as test_api
@@ -36,7 +38,12 @@ def test_app(platform_log_server, log_server):
     depl_file_name = test_cfg["depl_file_name"]
 
     client_list = test_api.get_client_list(file_path=f"{app_folder_path}/{depl_file_name}")
-    print(f"client list: {client_list}")
+    write_test_log(f"client list: {client_list}")
+
+    event_q = queue.Queue()
+    log_file_path = str(pathlib.Path(__file__).parents[1]) + "/server_logs"
+    log_file_observer_thread = test_api.FileObserverThread(event_q, folder_to_monitor=log_file_path)
+    log_file_observer_thread.start()
 
     controller, app_name = test_api.launch_riaps_app(
         app_folder_path=app_folder_path,
@@ -46,6 +53,52 @@ def test_app(platform_log_server, log_server):
         required_clients=client_list
     )
 
+    stress_handler(event_q)
+
     input("Press a key to terminate the app\n")
     test_api.terminate_riaps_app(controller, app_name)
     print(f"Test complete at {time.time()}")
+
+
+
+def write_test_log(msg):
+    log_dir_path = pathlib.Path(__file__).parents[1] / 'tests' / 'test_logs'
+    log_dir_path.mkdir(parents=True, exist_ok=True)
+    with open(f"{log_dir_path}/test_log.txt", "a") as log_file:
+        log_file.write(f"{datetime.datetime.utcnow()} | {msg}\n")
+
+
+def stress_handler(event_q):
+    try:
+        files = {}
+        while True:
+            try:
+                event_source = event_q.get(10)  #
+            except queue.Empty:
+                write_test_log(f"File event queue is empty")
+                continue
+
+            if ".log" not in event_source:  # required to filter out the directory events
+                continue
+
+            file_name = pathlib.Path(event_source).name
+            file_data = files.get(file_name, None)
+            if file_data is None:
+                file_handle = open(event_source, "r")
+                files[file_name] = {"fh": file_handle, "offset": 0}
+            else:
+                file_handle = file_data["fh"]
+
+            for line in file_handle:
+                files[file_name]["offset"] += len(line)
+                
+                if "connected" in line:
+                    connected = line.split("|")[1].split(":")[1].strip()                    
+                    if files[file_name].get("connected", None) != connected:
+                        node = line.split("|")[0].split("::")[-1].split(" ")[0].strip()
+                        files[file_name]["connected"] = connected
+                        write_test_log(f"node: {node} connections: {connected}")
+
+
+    except KeyboardInterrupt:
+        write_test_log(f"Keyboard interrupt received")
