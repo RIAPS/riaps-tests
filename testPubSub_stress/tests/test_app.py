@@ -6,24 +6,24 @@ import time
 
 import riaps.test_suite.test_api as test_api
 
-
 # --------------- #
 # -- Config -- #
 # --------------- #
-vanderbilt_config = {"VM_IP": "172.21.20.70",
-                     "app_folder_path": pathlib.Path(__file__).parents[1],
-                     "app_file_name": "stress.riaps",
-                     "depl_file_name": "stress_vu.depl"}
+vanderbilt_scott_config = {"VM_IP": "172.21.20.70",
+                           "app_folder_path": pathlib.Path(__file__).parents[1],
+                           "app_file_name": "stress.riaps",
+                           "depl_file_name": "stress_vu_scott.depl"}
 
 ncsu_config = {"VM_IP": "192.168.10.106",
                "app_folder_path": pathlib.Path(__file__).parents[1],
                "app_file_name": "stress.riaps",
                "depl_file_name": "stress_ncsu.depl"}
 
-configs = {"vu": vanderbilt_config,
+configs = {"vu_se": vanderbilt_scott_config,
            "ncsu": ncsu_config}
 
-test_cfg = configs["ncsu"]
+test_cfg = configs["vu_se"]
+
 
 # -------------------------- #
 # -- GUI DRIVEN APP TESTS -- #
@@ -60,7 +60,6 @@ def test_app(platform_log_server, log_server):
     print(f"Test complete at {time.time()}")
 
 
-
 def write_test_log(msg):
     log_dir_path = pathlib.Path(__file__).parents[1] / 'tests' / 'test_logs'
     log_dir_path.mkdir(parents=True, exist_ok=True)
@@ -91,9 +90,9 @@ def stress_handler(event_q):
 
             for line in file_handle:
                 files[file_name]["offset"] += len(line)
-                
+
                 if "connected" in line:
-                    connected = line.split("|")[1].split(":")[1].strip()                    
+                    connected = line.split("|")[1].split(":")[1].strip()
                     if files[file_name].get("connected", None) != connected:
                         node = line.split("|")[0].split("::")[-1].split(" ")[0].strip()
                         files[file_name]["connected"] = connected

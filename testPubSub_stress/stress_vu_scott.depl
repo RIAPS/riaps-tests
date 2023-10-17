@@ -1,0 +1,18 @@
+app NAME{
+
+    host all{
+        network 172.21.20.70;
+    }
+
+    on (riaps-5eb7.local) P2P_ACTOR(id="5eb7");
+    on (riaps-2f37.local) P2P_ACTOR(id="2f37");
+    on (riaps-aab1.local) P2P_ACTOR(id="aab1");
+    on (riaps-11c5.local) P2P_ACTOR(id="11c5");
+    on (riaps-99b4.local) P2P_ACTOR(id="99b4");
+    on (riaps-ede8.local) P2P_ACTOR(id="ede8");
+    //on (riaps-c452.local) P2P_ACTOR(id="c452");
+    //on (riaps-cb60.local) P2P_ACTOR(id="cb60");
+    //on (riaps-adef.local) P2P_ACTOR(id="adef");
+    //on (riaps-a702.local) P2P_ACTOR(id="a702");
+
+}

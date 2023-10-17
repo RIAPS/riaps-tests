@@ -1,0 +1,22 @@
+2023-10-17 18:33:29.798417 | client list: ['172.21.20.20', '172.21.20.37', '172.21.20.36', '172.21.20.38', '172.21.20.35', '172.21.20.34']
+2023-10-17 18:33:50.821364 | node: aab1 connections: 2
+2023-10-17 18:33:50.821803 | node: 2f37 connections: 2
+2023-10-17 18:33:56.418324 | node: 2f37 connections: 3
+2023-10-17 18:33:57.079553 | node: aab1 connections: 3
+2023-10-17 18:33:57.247537 | node: 11c5 connections: 3
+2023-10-17 18:34:19.275827 | node: 11c5 connections: 4
+2023-10-17 18:34:19.451033 | node: 2f37 connections: 4
+2023-10-17 18:34:20.109934 | node: aab1 connections: 4
+2023-10-17 18:34:20.113110 | node: 5eb7 connections: 4
+2023-10-17 18:34:27.007898 | node: ede8 connections: 5
+2023-10-17 18:34:43.152463 | node: 99b4 connections: 6
+2023-10-17 18:44:20.896146 | node: aab1 connections: 5
+2023-10-17 18:44:21.051594 | node: 11c5 connections: 5
+2023-10-17 18:44:21.052556 | node: 5eb7 connections: 5
+2023-10-17 18:44:21.219966 | node: 2f37 connections: 5
+2023-10-17 18:44:37.067840 | node: 11c5 connections: 6
+2023-10-17 18:44:37.068889 | node: 5eb7 connections: 6
+2023-10-17 18:44:37.239741 | node: 2f37 connections: 6
+2023-10-17 18:44:37.773100 | node: ede8 connections: 6
+2023-10-17 18:44:37.918932 | node: aab1 connections: 6
+2023-10-17 18:45:41.225405 | Keyboard interrupt received

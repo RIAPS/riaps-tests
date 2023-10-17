@@ -1,0 +1,103 @@
+::[info]::[18:25:09,458]::[22811]::Starting P2P 5eb7::
+::[info]::[18:25:37,793]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 38)::
+::[info]::[18:25:38,585]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 38)::
+::[info]::[18:25:38,709]::[22811]::5eb7 on_clock(): 1697567138.706682 | publish ('5eb7', 0)::
+::[info]::[18:25:38,710]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 0)::
+::[info]::[18:25:38,788]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 39)::
+::[info]::[18:25:39,586]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 39)::
+::[info]::[18:25:39,709]::[22811]::5eb7 on_clock(): 1697567139.708551 | publish ('5eb7', 1)::
+::[info]::[18:25:39,712]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 1)::
+::[info]::[18:25:39,790]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 40)::
+::[info]::[18:25:40,587]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 40)::
+::[info]::[18:25:40,711]::[22811]::5eb7 on_clock(): 1697567140.71037 | publish ('5eb7', 2)::
+::[info]::[18:25:40,714]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 2)::
+::[info]::[18:25:40,790]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 41)::
+::[info]::[18:25:41,589]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 41)::
+::[info]::[18:25:41,713]::[22811]::5eb7 on_clock(): 1697567141.7122192 | publish ('5eb7', 3)::
+::[info]::[18:25:41,715]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 3)::
+::[info]::[18:25:41,791]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 42)::
+::[info]::[18:25:42,590]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 42)::
+::[info]::[18:25:42,715]::[22811]::5eb7 on_clock(): 1697567142.7140636 | publish ('5eb7', 4)::
+::[info]::[18:25:42,718]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 4)::
+::[info]::[18:25:42,793]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 43)::
+::[info]::[18:25:43,591]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 43)::
+::[info]::[18:25:43,717]::[22811]::5eb7 on_clock(): 1697567143.715876 | publish ('5eb7', 5)::
+::[info]::[18:25:43,719]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 5)::
+::[info]::[18:25:43,794]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 44)::
+::[info]::[18:25:44,592]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 44)::
+::[info]::[18:25:44,718]::[22811]::5eb7 on_clock(): 1697567144.717742 | publish ('5eb7', 6)::
+::[info]::[18:25:44,721]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 6)::
+::[info]::[18:25:44,796]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 45)::
+::[info]::[18:25:45,594]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 45)::
+::[info]::[18:25:45,720]::[22811]::5eb7 on_clock(): 1697567145.7195632 | publish ('5eb7', 7)::
+::[info]::[18:25:45,723]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 7)::
+::[info]::[18:25:45,797]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 46)::
+::[info]::[18:25:46,595]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 46)::
+::[info]::[18:25:46,721]::[22811]::5eb7 on_clock(): 1697567146.7205002 | publish ('5eb7', 8)::
+::[info]::[18:25:46,724]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 8)::
+::[info]::[18:25:46,798]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 47)::
+::[info]::[18:25:47,596]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 47)::
+::[info]::[18:25:47,723]::[22811]::5eb7 on_clock(): 1697567147.7223237 | publish ('5eb7', 9)::
+::[info]::[18:25:47,729]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 9)::
+::[info]::[18:25:47,799]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 48)::
+::[info]::[18:25:48,598]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 48)::
+::[info]::[18:25:48,725]::[22811]::5eb7 on_clock(): 1697567148.7242138 | publish ('5eb7', 10)::
+::[info]::[18:25:48,730]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 10)::
+::[info]::[18:25:48,801]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 49)::
+::[info]::[18:25:49,599]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 49)::
+::[info]::[18:25:49,727]::[22811]::5eb7 on_clock(): 1697567149.7260313 | publish ('5eb7', 11)::
+::[info]::[18:25:49,731]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 11)::
+::[info]::[18:25:49,802]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 50)::
+::[info]::[18:25:50,600]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 50)::
+::[info]::[18:25:50,733]::[22811]::5eb7 on_clock(): 1697567150.7278528 | publish ('5eb7', 12)::
+::[info]::[18:25:50,734]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 12)::
+::[info]::[18:25:50,803]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 51)::
+::[info]::[18:25:51,601]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 51)::
+::[info]::[18:25:51,731]::[22811]::5eb7 on_clock(): 1697567151.7297125 | publish ('5eb7', 13)::
+::[info]::[18:25:51,736]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 13)::
+::[info]::[18:25:51,805]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 52)::
+::[info]::[18:25:52,603]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 52)::
+::[info]::[18:25:52,733]::[22811]::5eb7 on_clock(): 1697567152.732121 | publish ('5eb7', 14)::
+::[info]::[18:25:52,737]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 14)::
+::[info]::[18:25:52,806]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 53)::
+::[info]::[18:25:53,604]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 53)::
+::[info]::[18:25:53,735]::[22811]::5eb7 on_clock(): 1697567153.7340913 | publish ('5eb7', 15)::
+::[info]::[18:25:53,740]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 15)::
+::[info]::[18:25:53,808]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 54)::
+::[info]::[18:25:54,605]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 54)::
+::[info]::[18:25:54,737]::[22811]::5eb7 on_clock(): 1697567154.7359252 | publish ('5eb7', 16)::
+::[info]::[18:25:54,742]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 16)::
+::[info]::[18:25:54,809]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 55)::
+::[info]::[18:25:55,607]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 55)::
+::[info]::[18:25:55,739]::[22811]::5eb7 on_clock(): 1697567155.7378976 | publish ('5eb7', 17)::
+::[info]::[18:25:55,742]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 17)::
+::[info]::[18:25:55,810]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 56)::
+::[info]::[18:25:56,608]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 56)::
+::[info]::[18:25:56,741]::[22811]::5eb7 on_clock(): 1697567156.739701 | publish ('5eb7', 18)::
+::[info]::[18:25:56,743]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 18)::
+::[info]::[18:25:56,810]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 57)::
+::[info]::[18:25:57,609]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 57)::
+::[info]::[18:25:57,742]::[22811]::5eb7 on_clock(): 1697567157.7417848 | publish ('5eb7', 19)::
+::[info]::[18:25:57,747]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 19)::
+::[info]::[18:25:57,812]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 58)::
+::[info]::[18:25:58,611]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 58)::
+::[info]::[18:25:58,744]::[22811]::5eb7 on_clock(): 1697567158.743567 | publish ('5eb7', 20)::
+::[info]::[18:25:58,750]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 20)::
+::[info]::[18:25:58,813]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 59)::
+::[info]::[18:25:59,612]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 59)::
+::[info]::[18:25:59,745]::[22811]::5eb7 on_clock(): 1697567159.7445672 | publish ('5eb7', 21)::
+::[info]::[18:25:59,750]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 21)::
+::[info]::[18:25:59,814]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 60)::
+::[info]::[18:26:00,613]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 60)::
+::[info]::[18:26:00,747]::[22811]::5eb7 on_clock(): 1697567160.746353 | publish ('5eb7', 22)::
+::[info]::[18:26:00,752]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 22)::
+::[info]::[18:26:00,816]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 61)::
+::[info]::[18:26:01,614]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 61)::
+::[info]::[18:26:01,749]::[22811]::5eb7 on_clock(): 1697567161.7482893 | publish ('5eb7', 23)::
+::[info]::[18:26:01,754]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 23)::
+::[info]::[18:26:01,817]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 62)::
+::[info]::[18:26:02,616]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 62)::
+::[info]::[18:26:02,751]::[22811]::5eb7 on_clock(): 1697567162.7500753 | publish ('5eb7', 24)::
+::[info]::[18:26:02,754]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('5eb7', 24)::
+::[info]::[18:26:02,818]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('aab1', 63)::
+::[info]::[18:26:03,617]::[22811]::5eb7 on_p2p_sub() | connected: 3 | msg: ('2f37', 63)::
