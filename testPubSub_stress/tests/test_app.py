@@ -1,4 +1,5 @@
 import datetime
+import json
 import pathlib
 import pytest
 import queue
@@ -91,13 +92,14 @@ def stress_handler(event_q):
             for line in file_handle:
                 files[file_name]["offset"] += len(line)
 
-                if "connected" in line:
-                    connected = line.split("|")[1].split(":")[1].strip()
+                if "connections" in line:
+                    msg = json.loads(line.split("::")[4])
+                    connected = msg["connections"]
+                    node = msg["id"]
+
                     if files[file_name].get("connected", None) != connected:
-                        node = line.split("|")[0].split("::")[-1].split(" ")[0].strip()
                         files[file_name]["connected"] = connected
                         write_test_log(f"node: {node} connections: {connected}")
-
 
     except KeyboardInterrupt:
         write_test_log(f"Keyboard interrupt received")

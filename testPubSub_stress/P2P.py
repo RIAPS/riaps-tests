@@ -1,4 +1,6 @@
 #CompPub.py
+import json
+
 from riaps.run.comp import Component
 import os
 import logging
@@ -9,21 +11,24 @@ class P2P(Component):
     def __init__(self,id):
         super().__init__()
         self.id = id
-
+        self.connections = {}
         self.logger.info(f"Starting P2P {self.id}")
         self.messageCounter = 0
 
     def on_clock(self):
        now = self.clock.recv_pyobj()
-       msg = (self.id,self.messageCounter)
+       msg = {"id": self.id, "connections": self.p2p_sub.connected(), "msg_id": self.messageCounter}
        self.p2p_pub.send_pyobj(msg)
-       self.logger.info(f"{self.id} on_clock(): {now} | publish {msg}")
+       # self.logger.info(f"{self.id} on_clock(): {now} | publish {msg}")
        self.messageCounter += 1
 
     def on_p2p_sub(self):
         msg = self.p2p_sub.recv_pyobj()
-        self.logger.info(f"{self.id} on_p2p_sub() | connected: {self.p2p_sub.connected()} | msg: {msg}")
-
+        old_connections = self.connections.get(msg["id"], None)
+        current_connections = msg["connections"]
+        if old_connections != current_connections:
+            self.connections[msg["id"]] = current_connections
+            self.logger.info(f"{json.dumps(msg)}")
 
     def __destroy__(self):
         self.logger.info(f"Stopping P2P {self.id}")
