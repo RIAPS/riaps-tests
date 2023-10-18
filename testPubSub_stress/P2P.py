@@ -22,7 +22,7 @@ class P2P(Component):
        self.p2p_pub.send_pyobj(msg)
        msg2 = {"id": self.id, "connections": self.p2p_sub2.connected(), "msg_id": self.messageCounter, "topic": "2"}
        self.p2p_pub2.send_pyobj(msg2)
-       self.logger.info(f"{self.id} on_clock(): {now}")
+    #    self.logger.info(f"{self.id} on_clock(): {now}")
        self.messageCounter += 1
 
     def on_p2p_sub(self):

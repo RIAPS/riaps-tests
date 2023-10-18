@@ -23,7 +23,7 @@ ncsu_config = {"VM_IP": "192.168.10.106",
 configs = {"vu_se": vanderbilt_scott_config,
            "ncsu": ncsu_config}
 
-test_cfg = configs["vu_se"]
+test_cfg = configs["ncsu"]
 
 
 # -------------------------- #

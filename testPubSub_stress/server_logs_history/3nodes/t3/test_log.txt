@@ -1,0 +1,12 @@
+2023-10-18 17:16:29.598019 | client list: ['192.168.10.111', '192.168.10.112', '192.168.10.114']
+2023-10-18 17:17:02.652560 | file: 192.168.10.111_app.log node: 111 connections: 1 type: 1 total: 1
+2023-10-18 17:17:06.665199 | file: 192.168.10.111_app.log node: 111 connections: 2 type: 1 total: 2
+2023-10-18 17:17:10.744826 | file: 192.168.10.112_app.log node: 112 connections: 1 type: 1 total: 3
+2023-10-18 17:17:10.746165 | file: 192.168.10.112_app.log node: 112 connections: 2 type: 2 total: 4
+2023-10-18 17:17:27.981210 | file: 192.168.10.114_app.log node: 114 connections: 3 type: 1 total: 7
+2023-10-18 17:17:27.982427 | file: 192.168.10.114_app.log node: 114 connections: 1 type: 2 total: 5
+2023-10-18 17:26:57.078218 | file: 192.168.10.114_app.log node: 114 connections: 2 type: 2 total: 6
+2023-10-18 17:27:01.090243 | file: 192.168.10.114_app.log node: 114 connections: 3 type: 2 total: 7
+2023-10-18 17:27:18.861709 | file: 192.168.10.111_app.log node: 111 connections: 3 type: 1 total: 8
+2023-10-18 17:27:18.887589 | file: 192.168.10.112_app.log node: 112 connections: 3 type: 1 total: 9
+2023-10-18 17:33:06.572641 | Keyboard interrupt received
