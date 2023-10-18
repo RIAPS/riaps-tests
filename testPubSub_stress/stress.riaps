@@ -1,6 +1,7 @@
 app NAME {
 	message Topic1;
 	message p2pMsg;
+	message p2pMsg2;
 
 	component CompPub() {
 		pub PubPort : Topic1;
@@ -11,10 +12,12 @@ app NAME {
 		sub SubPort : Topic1;
 	}
 
-	component P2P(id){
+	component P2P(node_id){
 		timer clock 1000 msec;
 		pub p2p_pub : p2pMsg;
 		sub p2p_sub : p2pMsg;
+		pub p2p_pub2 : p2pMsg2;
+		sub p2p_sub2 : p2pMsg2;
 	}
 
 	actor Pub_ACTOR() {
@@ -29,9 +32,9 @@ app NAME {
 		}
 	}
 
-	actor P2P_ACTOR(id) {
+	actor P2P_ACTOR(node_id) {
 		{
-			peer : P2P(id=id);
+			peer : P2P(node_id=node_id);
 		}
 	}
 }

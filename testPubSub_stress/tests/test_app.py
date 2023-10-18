@@ -71,6 +71,7 @@ def write_test_log(msg):
 def stress_handler(event_q):
     try:
         files = {}
+        total_connections = 0
         while True:
             try:
                 event_source = event_q.get(10)  #
@@ -94,12 +95,18 @@ def stress_handler(event_q):
 
                 if "connections" in line:
                     msg = json.loads(line.split("::")[4])
-                    connected = msg["connections"]
+                    connections = msg["connections"]
                     node = msg["id"]
 
-                    if files[file_name].get("connected", None) != connected:
-                        files[file_name]["connected"] = connected
-                        write_test_log(f"node: {node} connections: {connected}")
+                    if str(node) not in file_name:
+                        continue
+
+                    if files[file_name].get("connections", None) != connections:
+                        files[file_name]["connections"] = connections
+                        total_connections = sum([files[file].get("connections", 0) for file in files])
+                        write_test_log(f"file: {file_name} node: {node}"
+                                       f" connections: {connections} type: {msg['topic']} "
+                                       f"total: {total_connections}")
 
     except KeyboardInterrupt:
         write_test_log(f"Keyboard interrupt received")

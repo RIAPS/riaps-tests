@@ -1,0 +1,24 @@
+2023-10-18 14:13:42.930033 | client list: ['172.21.20.20', '172.21.20.37', '172.21.20.36', '172.21.20.38', '172.21.20.35', '172.21.20.34']
+2023-10-18 14:14:01.977769 | file: 172.21.20.38_app.log node: 20.38 connections: 1 total: 1
+2023-10-18 14:14:01.977871 | file: 172.21.20.38_app.log node: 20.38 connections: 2 total: 2
+2023-10-18 14:14:01.978043 | file: 172.21.20.36_app.log node: 20.36 connections: 3 total: 3
+2023-10-18 14:14:01.978315 | file: 172.21.20.37_app.log node: 20.37 connections: 2 total: 4
+2023-10-18 14:14:01.978570 | file: 172.21.20.37_app.log node: 20.37 connections: 3 total: 5
+2023-10-18 14:14:02.253381 | file: 172.21.20.38_app.log node: 20.38 connections: 3 total: 6
+2023-10-18 14:14:15.531826 | file: 172.21.20.36_app.log node: 20.36 connections: 4 total: 7
+2023-10-18 14:14:16.271273 | file: 172.21.20.38_app.log node: 20.38 connections: 4 total: 8
+2023-10-18 14:14:16.400869 | file: 172.21.20.37_app.log node: 20.37 connections: 4 total: 9
+2023-10-18 14:14:16.919013 | file: 172.21.20.35_app.log node: 20.35 connections: 2 total: 10
+2023-10-18 14:14:17.907213 | file: 172.21.20.35_app.log node: 20.35 connections: 4 total: 11
+2023-10-18 14:14:18.535515 | file: 172.21.20.36_app.log node: 20.36 connections: 5 total: 12
+2023-10-18 14:14:18.906810 | file: 172.21.20.35_app.log node: 20.35 connections: 5 total: 13
+2023-10-18 14:14:19.275746 | file: 172.21.20.38_app.log node: 20.38 connections: 5 total: 14
+2023-10-18 14:14:19.400921 | file: 172.21.20.37_app.log node: 20.37 connections: 5 total: 15
+2023-10-18 14:14:19.979253 | file: 172.21.20.34_app.log node: 20.34 connections: 5 total: 16
+2023-10-18 14:14:22.854808 | file: 172.21.20.20_app.log node: 20.2 connections: 6 total: 17
+2023-10-18 14:24:15.976761 | file: 172.21.20.35_app.log node: 20.35 connections: 6 total: 18
+2023-10-18 14:24:16.041569 | file: 172.21.20.38_app.log node: 20.38 connections: 6 total: 19
+2023-10-18 14:24:16.043829 | file: 172.21.20.34_app.log node: 20.34 connections: 6 total: 20
+2023-10-18 14:24:16.156972 | file: 172.21.20.37_app.log node: 20.37 connections: 6 total: 21
+2023-10-18 14:24:16.302011 | file: 172.21.20.36_app.log node: 20.36 connections: 6 total: 22
+2023-10-18 14:26:01.722270 | Keyboard interrupt received
