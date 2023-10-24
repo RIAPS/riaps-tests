@@ -33,6 +33,7 @@ test_cfg = configs["ncsu"]
 @pytest.mark.parametrize('log_server', indirect=True,
                          argvalues=[{'server_ip': test_cfg["VM_IP"],
                                      'log_config_path': f"{test_cfg['app_folder_path']}/riaps-log.conf"}])
+@pytest.mark.skip(reason="Test is not ready")
 def test_app(platform_log_server, log_server):
     app_folder_path = test_cfg["app_folder_path"]
     app_file_name = test_cfg["app_file_name"]
@@ -56,7 +57,6 @@ def test_app(platform_log_server, log_server):
 
     stress_handler(event_q)
 
-    input("Press a key to terminate the app\n")
     test_api.terminate_riaps_app(controller, app_name)
     print(f"Test complete at {time.time()}")
 
