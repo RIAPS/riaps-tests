@@ -1,5 +1,6 @@
 If the tests are being run with pytest then the RIAPS test suite must be installed.
 https://github.com/RIAPS/test_suite
+as well as (watchdog)[https://pypi.org/project/watchdog/].
 
 parse logs to see the number of connections made:
 ```bash
