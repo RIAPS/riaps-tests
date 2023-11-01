@@ -1,0 +1,12 @@
+w 10
+f /home/riaps/projects/RIAPS/riaps-tests/testPubSub_stress
+m stress.riaps
+d stress_ncsu.depl
+i NAME
+l NAME
+w 30
+h NAME
+r NAME
+q
+
+

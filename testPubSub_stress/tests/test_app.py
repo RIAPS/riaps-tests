@@ -51,7 +51,7 @@ def test_app(platform_log_server, log_server):
         app_folder_path=app_folder_path,
         app_file_name=app_file_name,
         depl_file_name=depl_file_name,
-        database_type="dht",
+        database_type="redis",
         required_clients=client_list
     )
 
