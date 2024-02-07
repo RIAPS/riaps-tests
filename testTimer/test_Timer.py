@@ -1,13 +1,13 @@
 """RIAPS Timer Port Tests
 """
 import riaps_testing
-import pytest
-import riaps_fixtures_library.utils as utils
+#import pytest
+#import riaps_fixtures_library.utils as utils
 
-log_server_ip = utils.get_ip_address("riaps-VirtualBox.local")
+#log_server_ip = utils.get_ip_address("riaps-VirtualBox.local")
 
-@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
-def test_Timer(log_server):
+#@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
+def test_Timer():
     """
     Verify that test results match the expected behavior of the Timer ports
     """
