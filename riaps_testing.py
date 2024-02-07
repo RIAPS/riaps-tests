@@ -9,6 +9,7 @@ import time
 import threading
 import datetime
 
+
 stream = open('riaps_testing_config.yml', 'r')
 config = yaml.load(stream, Loader=yaml.SafeLoader)
 stream.close()
@@ -19,9 +20,12 @@ for key in {"hosts", "username", "password", "logPath", "logPrefix"}:
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-#Create ZMQ context
-
+# Create ZMQ context
 ctx = zmq.Context()
+
+# Get test host IP address and start log server
+log_server_ip = get_ip_address("riaps-VirtualBox.local")
+@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
 
 def parseString(str, name):
     """Replace keywords in string (commonly the contents of a file)
@@ -30,7 +34,7 @@ def parseString(str, name):
     any keywords with the appropriate strings to automate testing.
 
     Args:
-        str  (str): The string in which to replace keywords
+        str  (str): The string in which to replace keywords (like "HOST" and "LOG_SERVER")
         name (str): The name of the RIAPS application
 
     Returns:
@@ -45,6 +49,8 @@ def parseString(str, name):
         # Replace the first instance of HOST with the next available host
         str = str.replace("HOST", config['hosts'][num_hosts], 1)
         num_hosts += 1
+        
+    str.replace("LOG_SERVER", log_server_ip)
 
     return (str, num_hosts)
 

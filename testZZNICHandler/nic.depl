@@ -1,3 +1,7 @@
 app NAME {
+	host all {
+		network LOG_SERVER;
+	}
+  
   on (HOST) ActorA;
 }

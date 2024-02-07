@@ -1,4 +1,8 @@
 app NAME {
+		host all {
+		network LOG_SERVER;
+	}
+	
 	on (HOST) ServerActor;
 	on (HOST) ClientActor;
 	on (HOST) ClientActor;
