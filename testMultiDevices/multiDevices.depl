@@ -1,7 +1,4 @@
 app multiDevices {
-	host all {
-		network LOG_SERVER;
-	}
 
     on (HOST) DeviceActor();
     on (HOST) DeviceActor();

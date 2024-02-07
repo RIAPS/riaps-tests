@@ -44,6 +44,7 @@ fetch riaps-pycom $pycomversion riaps-pycom.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-armhf.deb
 fetch riaps-timesync $timesyncversion riaps-timesync-amd64.deb
 
+# Note:  this needs updating for v2.0.0 when we moved to rfab (fabric2), currently manually configuring hosts
 # Install deb packages to localhost and BBBs
 fab -f riaps-pycom/bin/fabfile -H 127.0.0.1 riaps.install
 fab -f riaps-pycom/bin/fabfile -H $(python3 read_hosts.py) deplo.stop riaps.reset riaps.install deplo.start

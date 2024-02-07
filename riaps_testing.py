@@ -8,8 +8,6 @@ import zmq
 import time
 import threading
 import datetime
-#import pytest
-#import riaps_fixtures_library.utils as utils
 
 
 stream = open('riaps_testing_config.yml', 'r')
@@ -24,10 +22,6 @@ client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 # Create ZMQ context
 ctx = zmq.Context()
-
-# Get test host IP address and start log server
-#log_server_ip = utils.get_ip_address("riaps-VirtualBox.local")
-#@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
 
 def parseString(str, name):
     """Replace keywords in string (commonly the contents of a file)
@@ -51,8 +45,6 @@ def parseString(str, name):
         # Replace the first instance of HOST with the next available host
         str = str.replace("HOST", config['hosts'][num_hosts], 1)
         num_hosts += 1
-        
-    #str = str.replace("LOG_SERVER", log_server_ip)
 
     return (str, num_hosts)
 

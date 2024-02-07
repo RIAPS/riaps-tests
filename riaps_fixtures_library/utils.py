@@ -1,3 +1,6 @@
+# Note: these fixtures are added for possible future use
+#       they are currently not utilized in the testing
+
 import datetime
 import time
 import pytest
