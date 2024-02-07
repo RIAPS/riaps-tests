@@ -2,6 +2,7 @@ import datetime
 import time
 import pytest
 import re
+import socket
 
 
 @pytest.fixture
@@ -14,7 +15,6 @@ def test_logger():
     return logger
 
 
-@pytest.fixture
 def get_ip_address(hostname):
     try:
         # Use socket to resolve the IP address
@@ -26,7 +26,6 @@ def get_ip_address(hostname):
         return None
 
 
-@pytest.fixture
 def get_client_list(file_path):
     client_names = []
     ip_addresses = []
