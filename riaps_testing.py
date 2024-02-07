@@ -52,7 +52,7 @@ def parseString(str, name):
         str = str.replace("HOST", config['hosts'][num_hosts], 1)
         num_hosts += 1
         
-    str.replace("LOG_SERVER", log_server_ip)
+    str = str.replace("LOG_SERVER", log_server_ip)
 
     return (str, num_hosts)
 
