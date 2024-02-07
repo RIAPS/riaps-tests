@@ -27,7 +27,7 @@ ctx = zmq.Context()
 
 # Get test host IP address and start log server
 log_server_ip = utils.get_ip_address("riaps-VirtualBox.local")
-@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
+#@pytest.mark.parametrize('log_server', [{'server_ip': log_server_ip}], indirect=True)
 
 def parseString(str, name):
     """Replace keywords in string (commonly the contents of a file)
