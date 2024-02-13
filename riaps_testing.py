@@ -8,6 +8,7 @@ import zmq
 import time
 import threading
 import datetime
+import riaps.rfab as rfab
 
 
 stream = open('riaps_testing_config.yml', 'r')
@@ -58,7 +59,7 @@ def powerCycleControl(hostname, events):
         sock.send_pyobj(msg)
         assert sock.recv_pyobj() == 'Powercycle sent', "Powercycle failed for timediff: %d" % timediff
 
-def runTest(name, folder, riaps, depl, startupTime=45, runTime=60, cleanupTime=30, powerTiming=None):
+def runTest(name, folder, riaps, depl, startupTime=60, runTime=60, cleanupTime=30, powerTiming=None):
     """Run a RIAPS application on BBB hosts
 
     Args:
@@ -156,6 +157,7 @@ def runTest(name, folder, riaps, depl, startupTime=45, runTime=60, cleanupTime=3
         for thread in threadPool:
             thread.join(timeout=1.0)
             assert thread.is_alive() == False, "A powerCycleControl thread failed to close!"
+            
 
     # Collect logs
     logs = {}
@@ -191,4 +193,8 @@ def runTest(name, folder, riaps, depl, startupTime=45, runTime=60, cleanupTime=3
             assert False, "Failed to retrieve logs from host: %s" % host
         finally:
             client.close()
+            
+    remoteNodes = rfab.api.utils.load_role("remote")
+    rfab.api.riaps.reset(remoteNodes)
+
     return logs
