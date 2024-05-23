@@ -194,7 +194,8 @@ def runTest(name, folder, riaps, depl, startupTime=60, runTime=60, cleanupTime=3
         finally:
             client.close()
             
-    remoteNodes = rfab.api.utils.load_role("remote")
-    rfab.api.riaps.reset(remoteNodes)
+    # Comment out for now
+    #remoteNodes = rfab.api.utils.load_role("remote")
+    #rfab.api.riaps.reset(remoteNodes)
 
     return logs
